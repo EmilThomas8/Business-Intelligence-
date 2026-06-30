@@ -1,0 +1,6 @@
+{
+  "name": "Business Intelligence Lab",
+  "description": "Premium Enterprise Technology & Corporate Learning Institute specializing in SAP ERP, Power BI, GST, Financial Accounting, and Data Analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
