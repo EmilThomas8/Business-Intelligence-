@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./components/sections/Hero";
 import Statistics from "./components/sections/Statistics";
@@ -10,6 +11,7 @@ import Contact from "./components/sections/Contact";
 import FAQSection from "./components/sections/FAQSection";
 import CourseHero from "./components/sections/CourseHero";
 import Footer from "./components/layout/Footer";
+import FloatingNav from "./components/layout/FloatingNav";
 
 export default function App() {
   const [view, setView] = useState<'home' | 'courses'>("home");
@@ -21,8 +23,11 @@ export default function App() {
       setView("courses");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
+      const isSwitchingView = view !== "home";
       setView("home");
       // Wait for components to mount before scrolling
+      // If we are switching views, wait for exit animation (300ms) to finish and new view to mount
+      const delay = isSwitchingView ? 350 : 60;
       setTimeout(() => {
         const el = document.getElementById(sectionId);
         if (el) {
@@ -30,7 +35,7 @@ export default function App() {
         } else {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
-      }, 60);
+      }, delay);
     }
   };
 
@@ -44,14 +49,16 @@ export default function App() {
   };
 
   const handleLearnMoreClick = (serviceTitle: string) => {
+    const isSwitchingView = view !== "home";
     setView("home");
+    const delay = isSwitchingView ? 350 : 60;
     setTimeout(() => {
       const el = document.getElementById('contact');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       setPrefilledComments(`I would like to receive more details regarding your: ${serviceTitle}.`);
-    }, 60);
+    }, delay);
   };
 
   return (
@@ -69,51 +76,69 @@ export default function App() {
 
       {/* Main Sections Wrapper */}
       <main className="flex-grow z-10 relative">
-        {view === "home" ? (
-          <>
-            {/* Hero Section */}
-            <Hero onNavigate={navigateTo} />
+        <AnimatePresence mode="wait">
+          {view === "home" ? (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              {/* Hero Section */}
+              <Hero onNavigate={navigateTo} />
 
-            {/* Dynamic Statistics Cards */}
-            <Statistics />
+              {/* Dynamic Statistics Cards */}
+              <Statistics />
 
-            {/* Program Cards Grid (Popular only in home mode) */}
-            <FeaturedPrograms
-              onEnrollClick={handleEnrollClick}
-              popularOnly={true}
-              onExploreAllClick={() => navigateTo("courses")}
-            />
+              {/* Program Cards Grid (Popular only in home mode) */}
+              <FeaturedPrograms
+                onEnrollClick={handleEnrollClick}
+                popularOnly={true}
+                onExploreAllClick={() => navigateTo("courses")}
+              />
 
-            {/* What We Offer / Services grid */}
-            <Services onLearnMoreClick={handleLearnMoreClick} />
+              {/* What We Offer / Services grid */}
+              <Services onLearnMoreClick={handleLearnMoreClick} />
 
-            {/* Why BIL Timeline Advantage */}
-            <WhyChooseBIL />
+              {/* Why BIL Timeline Advantage */}
+              <WhyChooseBIL />
 
-            {/* Interactive Step-by-Step Pathway Journey */}
-            <LearningJourney />
+              {/* Interactive Step-by-Step Pathway Journey */}
+              <LearningJourney />
 
-            {/* Split Coordinates and Reservations Form */}
-            <Contact prefilledCourse={prefilledCourse} prefilledComments={prefilledComments} />
+              {/* Categorized Accordion FAQ */}
+              <FAQSection />
 
-            {/* Categorized Accordion FAQ */}
-            <FAQSection />
-          </>
-        ) : (
-          <div className="pt-20">
-            {/* Course Hero Section */}
-            <CourseHero
-              onBackToHome={() => navigateTo("hero")}
-              onBookConsultation={() => handleEnrollClick()}
-            />
+              {/* Split Coordinates and Reservations Form */}
+              <Contact prefilledCourse={prefilledCourse} prefilledComments={prefilledComments} />
 
-            {/* Full Course offers catalog */}
-            <FeaturedPrograms
-              onEnrollClick={handleEnrollClick}
-              popularOnly={false}
-            />
-          </div>
-        )}
+              {/* Sticky Floating Section Navigation */}
+              <FloatingNav onNavigate={navigateTo} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="courses"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="pt-20"
+            >
+              {/* Course Hero Section */}
+              <CourseHero
+                onBackToHome={() => navigateTo("hero")}
+                onBookConsultation={() => handleEnrollClick()}
+              />
+
+              {/* Full Course offers catalog */}
+              <FeaturedPrograms
+                onEnrollClick={handleEnrollClick}
+                popularOnly={false}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Corporate Footprint Footer */}

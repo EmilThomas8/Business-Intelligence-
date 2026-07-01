@@ -113,11 +113,17 @@ export default function FeaturedPrograms({
 
         {/* Dynamic Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCourses.map((course) => (
-            <div
-              key={course.id}
-              className="group flex flex-col justify-between rounded-3xl bg-slate-900/30 backdrop-blur-md border border-white/5 hover:border-cyan-500/30 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(6,182,212,0.12)] shadow-2xl relative"
-            >
+          <AnimatePresence mode="popLayout">
+            {filteredCourses.map((course) => (
+              <motion.div
+                layout="position"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.35, ease: "easeInOut" }}
+                key={course.id}
+                className="group flex flex-col justify-between rounded-3xl bg-slate-900/30 backdrop-blur-md border border-white/5 hover:border-cyan-500/30 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(6,182,212,0.12)] shadow-2xl relative"
+              >
               {/* Popular stamp */}
               {course.isPopular && (
                 <div className="absolute top-4 right-4 z-20 px-3 py-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white text-[10px] font-mono uppercase tracking-wider font-bold rounded-md shadow-lg shadow-amber-500/20 flex items-center gap-1">
@@ -226,8 +232,9 @@ export default function FeaturedPrograms({
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
 
         {/* Explore All Courses CTA - only visible on home page when popularOnly is true */}

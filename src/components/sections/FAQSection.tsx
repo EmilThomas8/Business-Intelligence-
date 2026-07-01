@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HelpCircle, ChevronDown, Phone, ShieldCheck, Cloud, Award } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -81,13 +82,22 @@ export default function FAQSection() {
             const isOpen = openId === faq.id;
 
             return (
-              <div
+              <motion.div
                 key={faq.id}
                 id={`faq-card-${faq.id}`}
-                className={`group p-5 sm:p-6 rounded-2xl bg-slate-900/40 border transition-all duration-300 cursor-pointer ${
-                  isOpen 
-                    ? "border-cyan-500/40 bg-slate-900/80 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)]" 
-                    : "border-white/5 hover:border-cyan-500/20 hover:bg-slate-900/60"
+                layout="position"
+                initial={false}
+                animate={{
+                  backgroundColor: isOpen ? "rgba(15, 23, 42, 0.8)" : "rgba(15, 23, 42, 0.4)",
+                  borderColor: isOpen ? "rgba(6, 182, 212, 0.4)" : "rgba(255, 255, 255, 0.05)",
+                }}
+                whileHover={{
+                  borderColor: isOpen ? "rgba(6, 182, 212, 0.4)" : "rgba(6, 182, 212, 0.2)",
+                  backgroundColor: isOpen ? "rgba(15, 23, 42, 0.8)" : "rgba(15, 23, 42, 0.6)",
+                }}
+                transition={{ duration: 0.3 }}
+                className={`group p-5 sm:p-6 rounded-2xl border cursor-pointer ${
+                  isOpen ? "shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)]" : ""
                 }`}
                 onClick={() => toggleFAQ(faq.id)}
               >
@@ -105,29 +115,39 @@ export default function FAQSection() {
                       {faq.question}
                     </span>
                   </div>
-                  <div className={`p-1.5 rounded-lg border transition-all shrink-0 ${
-                    isOpen 
-                      ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400 rotate-180" 
-                      : "bg-white/5 border-white/5 text-slate-400 group-hover:text-white group-hover:border-white/10"
-                  }`}>
+                  <motion.div 
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className={`p-1.5 rounded-lg border shrink-0 ${
+                      isOpen 
+                        ? "bg-cyan-500/10 border-cyan-500/30 text-cyan-400" 
+                        : "bg-white/5 border-white/5 text-slate-400 group-hover:text-white group-hover:border-white/10"
+                    }`}
+                  >
                     <ChevronDown className="w-4 h-4" />
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Accordion Content with smooth height and opacity transitions */}
-                <div
-                  className={`grid transition-all duration-300 ease-in-out text-left overflow-hidden ${
-                    isOpen ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0'
-                  }`}
-                >
-                  <div className="overflow-hidden">
-                    <p className="text-sm text-slate-300 font-light leading-relaxed border-t border-white/5 pt-4">
-                      {faq.answer}
-                    </p>
-                  </div>
-                </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                      className="overflow-hidden text-left"
+                    >
+                      <div className="pt-4 mt-4 border-t border-white/5">
+                        <p className="text-sm text-slate-300 font-light leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-              </div>
+              </motion.div>
             );
           })}
         </div>
