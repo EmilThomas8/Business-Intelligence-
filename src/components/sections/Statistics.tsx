@@ -1,5 +1,61 @@
-import React from 'react';
-import { Users, GraduationCap, Award, Briefcase, Building, TrendingUp } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Users, GraduationCap, Award, Building, TrendingUp } from 'lucide-react';
+import { motion, useInView } from 'motion/react';
+
+function AnimatedNumber({ value }: { value: string }) {
+  const [current, setCurrent] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
+  // Extract number and suffix/prefix from string
+  const numMatch = value.match(/(\d+)/);
+  const isNumeric = numMatch !== null;
+  const targetNumber = isNumeric ? parseInt(numMatch[0], 10) : 0;
+  
+  let prefix = "";
+  let suffix = "";
+  if (isNumeric) {
+    const parts = value.split(numMatch[0]);
+    prefix = parts[0] || "";
+    suffix = parts[1] || "";
+  }
+
+  useEffect(() => {
+    if (!isNumeric || !isInView) return;
+
+    let startTime: number | null = null;
+    const duration = 1600; // 1.6 seconds for premium fluid transition
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      
+      // Easing function: cubic ease-out
+      const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+      const val = Math.floor(easeOutCubic * targetNumber);
+      
+      setCurrent(val);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, [isInView, isNumeric, targetNumber]);
+
+  if (!isNumeric) {
+    return <span ref={ref}>{value}</span>;
+  }
+
+  return (
+    <span ref={ref}>
+      {prefix}
+      {current}
+      {suffix}
+    </span>
+  );
+}
 
 export default function Statistics() {
   const stats = [
@@ -65,7 +121,7 @@ export default function Statistics() {
                 <div className="mt-6">
                   {/* Huge numeric value */}
                   <div className={`text-3xl md:text-4xl font-heading font-extrabold text-transparent bg-clip-text bg-gradient-to-r ${stat.color} tracking-tight`}>
-                    {stat.value}
+                    <AnimatedNumber value={stat.value} />
                   </div>
                   <div className="text-white font-semibold text-sm mt-2">
                     {stat.label}
