@@ -302,12 +302,6 @@ export const services: Service[] = [
     title: "Placement Assistance",
     description: "Resume building, mock interviews, and job referrals to connect you with the right employers.",
     iconName: "Briefcase"
-  },
-  {
-    id: "corporate-training",
-    title: "Corporate Training",
-    description: "Customised enterprise training programs for businesses looking to upskill their teams.",
-    iconName: "Building2"
   }
 ];
 
