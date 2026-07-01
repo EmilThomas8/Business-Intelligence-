@@ -5,7 +5,13 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Sparkles, MessageSquare, Shield, CheckCircle, Database, BarChart3, Receipt, Landmark } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, CheckCircle, Database, BarChart3, Receipt, Landmark } from "lucide-react";
+
+const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.51 5.276 3.508 8.48-.005 6.66-5.342 11.997-11.953 11.997-2.005-.001-3.973-.503-5.714-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.449 4.795 1.451 5.429.002 9.841-4.408 9.845-9.842.002-2.632-1.02-5.105-2.881-6.967-1.861-1.862-4.333-2.883-6.969-2.884-5.432 0-9.843 4.408-9.847 9.843-.001 1.73.457 3.417 1.325 4.904l-.994 3.63 3.727-.977zm11.452-4.664c-.31-.156-1.838-.907-2.122-1.01-.284-.103-.49-.156-.696.156-.206.31-.8.1-.986 1.185-.186.206-.372.232-.682.077-.31-.156-1.31-.483-2.495-1.54-1.222-1.09-2.046-2.436-2.285-2.848-.239-.412-.025-.634.18-.84.184-.184.412-.482.62-.722.206-.24.275-.412.412-.687.137-.275.069-.515-.034-.721-.103-.206-.8-1.928-1.097-2.65-.289-.696-.582-.601-.8-.612-.206-.01-.44-.011-.673-.011-.232 0-.61.087-.93.435-.32.348-1.22 1.192-1.22 2.91 0 1.718 1.248 3.377 1.42 3.606.173.23 2.457 3.75 5.952 5.263.832.36 1.482.576 1.99.737.836.265 1.597.227 2.197.138.67-.1 1.838-.75 2.095-1.44.258-.69.258-1.28.18-1.4-.078-.12-.284-.206-.593-.362z" />
+  </svg>
+);
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -101,12 +107,12 @@ export default function Hero({ onNavigate }: HeroProps) {
             {/* Secondary WhatsApp Action */}
             <a
               id="hero-btn-secondary"
-              href="https://wa.me/919999999999?text=Hello%20BIL,%20I'm%20interested%20in%20your%20Enterprise%20Programs."
+              href="https://wa.me/919480020875"
               target="_blank"
               rel="noopener noreferrer"
               className="font-button bg-emerald-500/10 border border-emerald-500/30 hover:border-emerald-500/60 text-emerald-400 hover:bg-emerald-500/20 text-base font-bold px-8 py-4 rounded-xl flex items-center justify-center gap-2 backdrop-blur-md hover:scale-[1.02] cursor-pointer transition-all duration-300 glow-whatsapp"
             >
-              <MessageSquare className="h-5 w-5 fill-emerald-400/15" />
+              <WhatsAppIcon className="h-5 w-5 fill-emerald-400/15" />
               Speak to Advisor
             </a>
           </motion.div>
@@ -268,3 +274,4 @@ export default function Hero({ onNavigate }: HeroProps) {
     </section>
   );
 }
+
