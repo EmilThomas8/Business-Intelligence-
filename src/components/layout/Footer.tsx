@@ -1,5 +1,13 @@
 import React from "react";
-import { GraduationCap, MapPin, Phone, Mail, Clock, MessageSquare, ShieldCheck, Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, ShieldCheck, Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
+import Logo from "../common/Logo";
+
+const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.517 2.266 2.27 3.51 5.276 3.508 8.48-.005 6.66-5.342 11.997-11.953 11.997-2.005-.001-3.973-.503-5.714-1.458L0 24zm6.59-4.846c1.6.95 3.16 1.449 4.795 1.451 5.429.002 9.841-4.408 9.845-9.842.002-2.632-1.02-5.105-2.881-6.967-1.861-1.862-4.333-2.883-6.969-2.884-5.432 0-9.843 4.408-9.847 9.843-.001 1.73.457 3.417 1.325 4.904l-.994 3.63 3.727-.977zm11.452-4.664c-.31-.156-1.838-.907-2.122-1.01-.284-.103-.49-.156-.696.156-.206.31-.8.1-.986 1.185-.186.206-.372.232-.682.077-.31-.156-1.31-.483-2.495-1.54-1.222-1.09-2.046-2.436-2.285-2.848-.239-.412-.025-.634.18-.84.184-.184.412-.482.62-.722.206-.24.275-.412.412-.687.137-.275.069-.515-.034-.721-.103-.206-.8-1.928-1.097-2.65-.289-.696-.582-.601-.8-.612-.206-.01-.44-.011-.673-.011-.232 0-.61.087-.93.435-.32.348-1.22 1.192-1.22 2.91 0 1.718 1.248 3.377 1.42 3.606.173.23 2.457 3.75 5.952 5.263.832.36 1.482.576 1.99.737.836.265 1.597.227 2.197.138.67-.1 1.838-.75 2.095-1.44.258-.69.258-1.28.18-1.4-.078-.12-.284-.206-.593-.362z" />
+  </svg>
+);
+
 
 interface FooterProps {
   onNavigate: (sectionId: string) => void;
@@ -24,24 +32,9 @@ export default function Footer({ onNavigate }: FooterProps) {
             <button
               id="footer-logo-btn"
               onClick={() => onNavigate("hero")}
-              className="flex items-center gap-2.5 group focus:outline-none cursor-pointer text-left"
+              className="flex items-center focus:outline-none cursor-pointer text-left"
             >
-              <div className="bg-gradient-to-br from-blue-600 to-cyan-500 text-white p-2 rounded-xl flex items-center justify-center">
-                <GraduationCap className="h-6 w-6" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5 leading-none">
-                  <span className="font-heading font-extrabold text-xl text-white tracking-tight">
-                    Business Intelligence Lab
-                  </span>
-                  <span className="bg-cyan-500/10 text-cyan-400 text-[9px] font-mono font-bold px-1 rounded border border-cyan-500/20">
-                    PRO
-                  </span>
-                </div>
-                <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest leading-none mt-1 block">
-                  Where Expertise Meets Excellence.
-                </span>
-              </div>
+              <Logo className="h-14 w-14 transition-transform duration-300 hover:scale-105" showText={true} light={true} />
             </button>
 
             <p className="text-sm text-slate-400 leading-relaxed font-light">
@@ -126,9 +119,9 @@ export default function Footer({ onNavigate }: FooterProps) {
                 href="https://wa.me/919480020875"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2.5 py-3 px-5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all duration-300 shadow-md shadow-emerald-500/10 hover:-translate-y-0.5 cursor-pointer w-full justify-center sm:w-auto"
+                className="inline-flex items-center gap-2.5 py-3 px-5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-semibold text-xs sm:text-sm rounded-xl transition-all duration-300 shadow-md shadow-emerald-500/10 hover:-translate-y-0.5 cursor-pointer w-full justify-center sm:w-auto font-button"
               >
-                <MessageSquare className="h-4 w-4 shrink-0" />
+                <WhatsAppIcon className="h-4.5 w-4.5 shrink-0" />
                 <span>Chat on WhatsApp</span>
               </a>
               <p className="text-xs text-slate-500 font-light italic pl-1">
