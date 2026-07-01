@@ -15,12 +15,12 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
   // Reusable star path at (0, 0)
   const starPath = "M 0 -10 L 2.8 -3.1 L 10 -3.1 L 4.2 1.5 L 6.8 8.1 L 0 4 L -6.8 8.1 L -4.2 1.5 L -10 -3.1 L -2.8 -3.1 Z";
 
-  // Angles for laurel leaves (symmetrical)
-  const leafAngles = [-55, -40, -25, -10, 5, 20, 35, 50, 65];
+  // Angles for single laurel leaves from bottom-center to top-sides
+  const leafAngles = [72, 58, 44, 30, 16, 2, -12, -26, -40, -54, -68];
 
   // Colors based on theme/light prop
   const primaryBlue = "#0b3394"; // Corporate deep academic blue
-  const goldColor = "#d4af37";   // Premium gold
+  const goldColor = "#c59b27";   // Rich emblem gold
   const textColor = light ? "#ffffff" : "#0b3394";
 
   return (
@@ -34,16 +34,16 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
         {/* White circular backing to ensure flawless contrast on any background */}
         <circle cx="250" cy="250" r="238" fill="#ffffff" />
 
-        {/* Hidden curved path for the arched text */}
+        {/* 270-degree curved path for the arched text starting at 135deg and ending at 45deg (clockwise) */}
         <path
           id="textArcPath"
-          d="M 65 250 A 185 185 0 0 1 435 250"
+          d="M 101 399 A 210 210 0 1 1 399 399"
           fill="none"
         />
 
-        {/* Central Double Circle */}
+        {/* Central Double Circle around BIL */}
         <circle cx="250" cy="250" r="114" stroke={primaryBlue} strokeWidth="5" />
-        <circle cx="250" cy="250" r="102" stroke={primaryBlue} strokeWidth="2.5" />
+        <circle cx="250" cy="250" r="102" stroke={primaryBlue} strokeWidth="2.2" />
 
         {/* Center "BIL" text */}
         <text
@@ -51,7 +51,7 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
           y="278"
           textAnchor="middle"
           fill={primaryBlue}
-          fontSize="88"
+          fontSize="90"
           fontFamily="Georgia, 'Times New Roman', Times, serif"
           fontWeight="900"
           letterSpacing="1"
@@ -64,59 +64,54 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
         <path d={starPath} fill={primaryBlue} transform="translate(202, 128) scale(1.1)" />
         <path d={starPath} fill={primaryBlue} transform="translate(298, 128) scale(1.1)" />
 
-        {/* Golden Laurel Wreath (Symmetrical Leaves flanking the circle) */}
+        {/* Golden Laurel Wreath (Single Leaves flanking the circle) */}
         <g id="laurel-wreath">
+          {/* Crossed stems at the bottom */}
+          {/* Left Stem */}
+          <path
+            d="M 265 382 Q 240 375 116 250 A 134 134 0 0 1 185 130"
+            stroke={goldColor}
+            strokeWidth="3"
+            strokeLinecap="round"
+            fill="none"
+          />
+          {/* Right Stem */}
+          <path
+            d="M 235 382 Q 260 375 384 250 A 134 134 0 0 0 315 130"
+            stroke={goldColor}
+            strokeWidth="3"
+            strokeLinecap="round"
+            fill="none"
+          />
+
           {leafAngles.map((angle) => {
-            // Right side wreath: rot angle, translate outward, draw leaf pair
+            // Right side wreath: rot angle, translate outward, draw single leaf pointing up-out
             const rightTransform = `translate(250, 250) rotate(${angle}) translate(134, 0)`;
-            // Left side wreath: rotate opposite, translate outward, draw leaf pair
+            // Left side wreath: rotate opposite, translate outward, draw single leaf pointing up-out
             const leftTransform = `translate(250, 250) rotate(${180 - angle}) translate(134, 0)`;
 
             return (
               <g key={angle}>
-                {/* Right Leaf Pair */}
+                {/* Right Leaf */}
                 <g transform={rightTransform}>
-                  {/* Upper leaf pointing outwards and up */}
                   <path
-                    d="M 0 0 C 12 -12, 28 -8, 35 2 C 24 10, 10 8, 0 0"
+                    d="M 0 0 C 8 -12, 22 -10, 28 2 C 20 10, 8 8, 0 0 Z"
                     fill={goldColor}
-                    transform="rotate(-20)"
-                  />
-                  {/* Lower leaf pointing outwards and down */}
-                  <path
-                    d="M 0 0 C 12 12, 28 8, 35 -2 C 24 -10, 10 -8, 0 0"
-                    fill={goldColor}
-                    transform="rotate(20)"
+                    transform="rotate(-40)"
                   />
                 </g>
 
-                {/* Left Leaf Pair */}
+                {/* Left Leaf */}
                 <g transform={leftTransform}>
-                  {/* Upper leaf pointing outwards and up */}
                   <path
-                    d="M 0 0 C 12 12, 28 8, 35 -2 C 24 -10, 10 -8, 0 0"
+                    d="M 0 0 C 8 12, 22 10, 28 -2 C 20 -10, 8 -8, 0 0 Z"
                     fill={goldColor}
-                    transform="rotate(20)"
-                  />
-                  {/* Lower leaf pointing outwards and down */}
-                  <path
-                    d="M 0 0 C 12 -12, 28 -8, 35 2 C 24 10, 10 8, 0 0"
-                    fill={goldColor}
-                    transform="rotate(-20)"
+                    transform="rotate(40)"
                   />
                 </g>
               </g>
             );
           })}
-          
-          {/* Stem bases connector */}
-          <path
-            d="M 165 342 Q 250 405 335 342"
-            stroke={goldColor}
-            strokeWidth="4"
-            strokeLinecap="round"
-            fill="none"
-          />
         </g>
 
         {/* Arched Text: BUSINESS INTELLIGENCE LAB */}
@@ -125,12 +120,12 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
             href="#textArcPath"
             startOffset="50%"
             textAnchor="middle"
-            fontSize="41"
+            fontSize="36"
             fontFamily="Georgia, 'Times New Roman', Times, serif"
             fontWeight="bold"
-            letterSpacing="5.5"
+            letterSpacing="11"
           >
-            BUSINESS INTELLIGENCE
+            BUSINESS INTELLIGENCE LAB
           </textPath>
         </text>
 
