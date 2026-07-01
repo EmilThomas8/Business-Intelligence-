@@ -35,16 +35,12 @@ export default function App() {
   };
 
   const handleEnrollClick = (courseTitle?: string) => {
-    setView("home");
-    setTimeout(() => {
-      const el = document.getElementById('contact');
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      if (courseTitle) {
-        setPrefilledCourse(courseTitle);
-      }
-    }, 60);
+    const phoneNumber = "919480020875";
+    const text = courseTitle
+      ? `Hello Business Intelligence Lab, I would like to enroll in the course: ${courseTitle}`
+      : "Hello Business Intelligence Lab, I am interested in enrolling in a course.";
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   const handleLearnMoreClick = (serviceTitle: string) => {
@@ -125,3 +121,4 @@ export default function App() {
     </div>
   );
 }
+
