@@ -59,16 +59,48 @@ export default function Contact({ prefilledCourse, prefilledComments }: ContactP
     if (!formData.name || !formData.email || !formData.phone) return;
 
     setIsSubmitting(true);
-    // Simulate API pipeline transmission
+
+    const subject = `Inquiry: ${formData.course || "General Up-skilling"} - ${formData.name}`;
+    const body = `Hello Business Intelligence Lab,
+
+I would like to inquire about the ${formData.course || "General Up-skilling"} program.
+
+My Details:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- Target Program: ${formData.course || "Not specified"}
+- Specific Inquiries / Goals: ${formData.comments || "None specified"}
+
+Sincerely,
+${formData.name}`;
+
+    const whatsappText = `Hello Business Intelligence Lab, I would like to submit an upskilling inquiry:
+- Name: ${formData.name}
+- Email: ${formData.email}
+- Phone: ${formData.phone}
+- Program: ${formData.course || "Not specified"}
+- Specific Inquiries: ${formData.comments || "None specified"}`;
+
+    const whatsappUrl = `https://wa.me/919480020875?text=${encodeURIComponent(whatsappText)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=businessintelligencelab7@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open WhatsApp
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+    // Open Gmail web client in another tab
     setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      // Reset after success window
-      setTimeout(() => {
-        setSubmitSuccess(false);
-        setFormData({ name: "", email: "", phone: "", course: "", comments: "" });
-      }, 5000);
-    }, 1500);
+      window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    }, 350);
+
+    setIsSubmitting(false);
+    setSubmitSuccess(true);
+
+    // Reset after success window
+    setTimeout(() => {
+      setSubmitSuccess(false);
+      setFormData({ name: "", email: "", phone: "", course: "", comments: "" });
+    }, 5000);
   };
 
   return (
