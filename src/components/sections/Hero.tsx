@@ -277,6 +277,60 @@ export default function Hero({ onNavigate }: HeroProps) {
           </motion.div>
         </div>
       </div>
+
+      {/* Infinite Horizontal Scrolling Ticker */}
+      <div className="absolute bottom-0 left-0 right-0 overflow-hidden bg-slate-950/80 border-t border-slate-800/60 py-4.5 backdrop-blur-md z-20 select-none">
+        <div className="flex w-max">
+          <motion.div
+            className="flex gap-16 pr-16 text-sm md:text-base font-semibold tracking-[0.25em] text-slate-400 uppercase items-center"
+            animate={{ x: [0, "-50%"] }}
+            transition={{
+              ease: "linear",
+              duration: 25,
+              repeat: Infinity,
+            }}
+          >
+            {/* Group 1 */}
+            <div className="flex gap-16 items-center shrink-0">
+              <span className="flex items-center gap-16">
+                <span className="text-white/90 hover:text-blue-400 transition-colors duration-300 font-bold">Learn</span>
+                <span className="text-blue-500 font-black">•</span>
+                <span className="text-white/90 hover:text-cyan-400 transition-colors duration-300 font-bold">Grow</span>
+                <span className="text-cyan-500 font-black">•</span>
+                <span className="text-white/90 hover:text-emerald-400 transition-colors duration-300 font-bold">Success</span>
+                <span className="text-emerald-500 font-black">•</span>
+              </span>
+              <span className="flex items-center gap-16">
+                <span className="text-white/90 hover:text-blue-400 transition-colors duration-300 font-bold">Learn</span>
+                <span className="text-blue-500 font-black">•</span>
+                <span className="text-white/90 hover:text-cyan-400 transition-colors duration-300 font-bold">Grow</span>
+                <span className="text-cyan-500 font-black">•</span>
+                <span className="text-white/90 hover:text-emerald-400 transition-colors duration-300 font-bold">Success</span>
+                <span className="text-emerald-500 font-black">•</span>
+              </span>
+            </div>
+            {/* Group 2 (Duplicate for seamless scroll) */}
+            <div className="flex gap-16 items-center shrink-0">
+              <span className="flex items-center gap-16">
+                <span className="text-white/90 hover:text-blue-400 transition-colors duration-300 font-bold">Learn</span>
+                <span className="text-blue-500 font-black">•</span>
+                <span className="text-white/90 hover:text-cyan-400 transition-colors duration-300 font-bold">Grow</span>
+                <span className="text-cyan-500 font-black">•</span>
+                <span className="text-white/90 hover:text-emerald-400 transition-colors duration-300 font-bold">Success</span>
+                <span className="text-emerald-500 font-black">•</span>
+              </span>
+              <span className="flex items-center gap-16">
+                <span className="text-white/90 hover:text-blue-400 transition-colors duration-300 font-bold">Learn</span>
+                <span className="text-blue-500 font-black">•</span>
+                <span className="text-white/90 hover:text-cyan-400 transition-colors duration-300 font-bold">Grow</span>
+                <span className="text-cyan-500 font-black">•</span>
+                <span className="text-white/90 hover:text-emerald-400 transition-colors duration-300 font-bold">Success</span>
+                <span className="text-emerald-500 font-black">•</span>
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 }
