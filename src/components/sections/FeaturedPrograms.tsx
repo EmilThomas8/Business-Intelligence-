@@ -19,13 +19,25 @@ interface FeaturedProgramsProps {
   popularOnly?: boolean;
   onExploreAllClick?: () => void;
   onBackToHome?: () => void;
+  onNavigateToCourseSlug?: (slug: string) => void;
 }
+
+const courseIdToSlug: Record<string, string> = {
+  "sap-b1": "sap-business-one-b1-training-mangalore",
+  "sap-fico": "sap-fico-training-mangalore",
+  "sap-mm": "sap-mm-training-mangalore",
+  "sap-sd": "sap-sd-training-mangalore",
+  "e-filing": "e-filing-course-mangalore",
+  "uae-vat": "uae-vat-course-mangalore",
+  "advanced-excel": "advanced-excel-training-mangalore"
+};
 
 export default function FeaturedPrograms({
   onEnrollClick,
   popularOnly = false,
   onExploreAllClick,
-  onBackToHome
+  onBackToHome,
+  onNavigateToCourseSlug
 }: FeaturedProgramsProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeDetailCourse, setActiveDetailCourse] = useState<Course | null>(null);
@@ -45,7 +57,7 @@ export default function FeaturedPrograms({
     "sap-sd": "https://media.licdn.com/dms/image/v2/D4D12AQEFjpvXxn2Z4A/article-cover_image-shrink_720_1280/B4DZhWCwMnGkAI-/0/1753790219751?e=2147483647&v=beta&t=Y5n5rKPOwfQh2G_zpjFN491HgZAZk6Qvw1Y60694JXI",
     "e-filing": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
     "uae-vat": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCy7rr9_RQts-uGDFbgULMRHstHFoH3gy4Kb-7hHjcZwGM0_g2uDl3X-Ix&s=10",
-    "excel-power-bi": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTC8Vlg7nGi7L01LkUFuPOPyoN1Ryf4Ab-63xLbB2_4ONGKVFvCzBZ7r9f&s=10"
+    "advanced-excel": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTC8Vlg7nGi7L01LkUFuPOPyoN1Ryf4Ab-63xLbB2_4ONGKVFvCzBZ7r9f&s=10"
   };
 
   return (
@@ -207,7 +219,14 @@ export default function FeaturedPrograms({
                   {/* Double Actions Layout */}
                   <div className="grid grid-cols-2 gap-3 mt-1">
                     <button
-                      onClick={() => setActiveDetailCourse(course)}
+                      onClick={() => {
+                        const slug = courseIdToSlug[course.id];
+                        if (slug && onNavigateToCourseSlug) {
+                          onNavigateToCourseSlug(slug);
+                        } else {
+                          setActiveDetailCourse(course);
+                        }
+                      }}
                       className="py-3 bg-white/5 hover:bg-white/10 text-slate-200 font-semibold text-xs sm:text-sm rounded-xl transition-all duration-300 border border-white/5 flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <BookOpen className="w-3.5 h-3.5" />

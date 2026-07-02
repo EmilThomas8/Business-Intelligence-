@@ -148,20 +148,20 @@ export const courses: Course[] = [
 
   // --- Analytics & Excel ---
   {
-    id: "excel-power-bi",
-    title: "ADVANCE EXCEL WITH POWER BI ANALYTICS",
-    subtitle: "Business Intelligence & Data Analytics",
+    id: "advanced-excel",
+    title: "ADVANCED EXCEL WITH POWER BI ANALYTICS",
+    subtitle: "Advanced Spreadsheet Modeling & Business Intelligence",
     category: "Analytics & Excel",
-    description: "High-end comprehensive program combining advanced spreadsheet modeling with multi-dimensional Power BI dashboard architecture and DAX query writing.",
+    description: "High-end comprehensive program combining advanced spreadsheet modeling and automation with Power BI multi-dimensional database architecture, DAX query writing, and interactive reporting.",
     duration: "90 hours / 2 months",
     rating: 4.9,
     reviewsCount: 342,
     difficulty: "Intermediate",
     isPopular: true,
     certified: true,
-    skills: ["DAX modeling", "Power Query M Language", "Power BI Service", "Gateway Configuration", "Row-Level Security (RLS)", "Advanced Formulas & Key Pivots"],
-    careerPaths: ["BI Analyst", "Data Analyst", "MIS & Reporting Manager"],
-    features: ["Cloud-hosted analytics portals", "Complex DAX pattern blueprints", "Microsoft PL-300 curriculum alignment"]
+    skills: ["Advanced Formulas & Arrays", "Pivot Dashboard Designs", "Power Query ETL Pipelines", "DAX Query Writing", "Power BI Service Cloud", "Macro Automation"],
+    careerPaths: ["Data Analyst", "BI Specialist", "MIS & Reporting Manager"],
+    features: ["Real-world business tracking", "Automated ETL pipelines", "Interactive cloud sandboxes", "Direct mentor audits"]
   }
 ];
 
