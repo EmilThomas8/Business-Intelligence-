@@ -136,7 +136,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             </span>
             <div className="flex flex-wrap items-center gap-2.5 text-sm text-slate-300 font-mono font-medium">
               <span className="bg-slate-900 px-2.5 py-1 rounded border border-slate-800 flex items-center gap-1">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" /> SAP S/4HANA ERP
+                <span className="h-1.5 w-1.5 rounded-full bg-blue-400 animate-pulse" /> SAP S/4 HANA ERP
               </span>
               <span className="bg-slate-900 px-2.5 py-1 rounded border border-slate-800 flex items-center gap-1">
                 <span className="h-1.5 w-1.5 rounded-full bg-yellow-400 animate-pulse" /> Microsoft Power BI

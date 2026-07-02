@@ -5,7 +5,8 @@
 
 import React, { useState, useRef, useEffect, FormEvent } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, ShieldCheck, CheckCircle2, MessageSquare, ExternalLink } from "lucide-react";
+import { courses } from "../../data/instituteData";
 
 interface ContactProps {
   prefilledCourse: string;
@@ -23,26 +24,19 @@ export default function Contact({ prefilledCourse, prefilledComments }: ContactP
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submittedUrls, setSubmittedUrls] = useState<{ whatsapp: string; gmail: string; mailto: string } | null>(null);
 
   // Sync prefilled course when user clicks Inquiry from program lists
   useEffect(() => {
     if (prefilledCourse) {
-      const courseLower = prefilledCourse.toLowerCase();
-      let matchedVal = "";
-      if (courseLower.includes("sap") || courseLower.includes("fico")) {
-        matchedVal = "SAP S/4HANA Finance";
-      } else if (courseLower.includes("power") || courseLower.includes("intelligence") || courseLower.includes("bi")) {
-        matchedVal = "Executive Business Intelligence";
-      } else if (courseLower.includes("gst") || courseLower.includes("tax")) {
-        matchedVal = "Certified Corporate GST Practitioner";
-      } else if (courseLower.includes("accounting") || courseLower.includes("erp")) {
-        matchedVal = "Financial Accounting";
-      } else if (courseLower.includes("analytics") || courseLower.includes("sql")) {
-        matchedVal = "Enterprise Analytics";
-      }
-
-      if (matchedVal) {
-        setFormData((prev) => ({ ...prev, course: matchedVal }));
+      const matched = courses.find(
+        (c) =>
+          c.title.toLowerCase().includes(prefilledCourse.toLowerCase()) ||
+          c.id.toLowerCase().includes(prefilledCourse.toLowerCase()) ||
+          (c.subtitle && c.subtitle.toLowerCase().includes(prefilledCourse.toLowerCase()))
+      );
+      if (matched) {
+        setFormData((prev) => ({ ...prev, course: matched.title }));
       }
     }
   }, [prefilledCourse]);
@@ -54,7 +48,7 @@ export default function Contact({ prefilledCourse, prefilledComments }: ContactP
     }
   }, [prefilledComments]);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.phone) return;
 
@@ -84,23 +78,45 @@ ${formData.name}`;
 
     const whatsappUrl = `https://wa.me/919480020875?text=${encodeURIComponent(whatsappText)}`;
     const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=businessintelligencelab7@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const mailtoUrl = `mailto:businessintelligencelab7@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    // Open WhatsApp
+    setSubmittedUrls({
+      whatsapp: whatsappUrl,
+      gmail: gmailUrl,
+      mailto: mailtoUrl
+    });
+
+    try {
+      // Dispatch server-side email request
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          course: formData.course || "General Up-skilling",
+          comments: formData.comments,
+        }),
+      });
+    } catch (err) {
+      console.error("[Contact API Dispatch Error]:", err);
+    }
+
+    // 1. Open WhatsApp in a new tab (direct result of user click, not blocked)
     window.open(whatsappUrl, "_blank", "noopener,noreferrer");
 
-    // Open Gmail web client in another tab
+    // 2. Open Gmail web composer or trigger mailto link
+    // Rather than multiple window.opens which trigger popup blockers,
+    // we use window.location.href for the mailto url, which launches the mail app or Gmail handler instantly
     setTimeout(() => {
-      window.open(gmailUrl, "_blank", "noopener,noreferrer");
-    }, 350);
+      window.location.href = mailtoUrl;
+    }, 250);
 
     setIsSubmitting(false);
     setSubmitSuccess(true);
-
-    // Reset after success window
-    setTimeout(() => {
-      setSubmitSuccess(false);
-      setFormData({ name: "", email: "", phone: "", course: "", comments: "" });
-    }, 5000);
   };
 
   return (
@@ -201,15 +217,63 @@ ${formData.name}`;
                 </span>
               </div>
 
-              {submitSuccess ? (
-                <div className="py-12 flex flex-col items-center text-center space-y-4">
+              {submitSuccess && submittedUrls ? (
+                <div className="py-6 flex flex-col items-center text-center space-y-5">
                   <div className="p-4 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
-                    <CheckCircle2 className="h-10 w-10" />
+                    <CheckCircle2 className="h-10 w-10 animate-pulse text-emerald-400" />
                   </div>
-                  <h4 className="font-heading font-extrabold text-xl text-white">Inquiry Transmitted Successfully</h4>
-                  <p className="text-slate-300 text-sm max-w-sm font-light">
-                    Thank you. Your request is queued. An admissions advisor will connect with you via WhatsApp/Email within 2 business hours.
-                  </p>
+                  <div className="space-y-1.5">
+                    <h4 className="font-heading font-extrabold text-xl text-white">Inquiry Transmitted!</h4>
+                    <p className="text-slate-300 text-sm max-w-sm font-light leading-relaxed">
+                      We have processed your upskilling inquiry on the portal backend and initiated the WhatsApp and email launchers. If they didn't trigger automatically, please click below:
+                    </p>
+                  </div>
+
+                  <div className="w-full space-y-3 pt-1">
+                    {/* Send via WhatsApp Button */}
+                    <a
+                      href={submittedUrls.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full font-button bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg hover:shadow-[#25D366]/20 transition-all duration-300 text-sm cursor-pointer"
+                    >
+                      <MessageSquare className="h-4.5 w-4.5" />
+                      <span>1. Submit via WhatsApp</span>
+                      <ExternalLink className="h-3.5 w-3.5 ml-1 opacity-70" />
+                    </a>
+
+                    {/* Send via Gmail Web Button */}
+                    <a
+                      href={submittedUrls.gmail}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full font-button bg-[#EA4335] hover:bg-[#d93025] text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 shadow-lg hover:shadow-[#EA4335]/20 transition-all duration-300 text-sm cursor-pointer"
+                    >
+                      <Mail className="h-4.5 w-4.5" />
+                      <span>2. Submit via Gmail Web</span>
+                      <ExternalLink className="h-3.5 w-3.5 ml-1 opacity-70" />
+                    </a>
+
+                    {/* Send via local Mail client */}
+                    <a
+                      href={submittedUrls.mailto}
+                      className="w-full font-button bg-slate-800/80 hover:bg-slate-800 border border-white/10 text-slate-300 hover:text-white font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 text-xs cursor-pointer"
+                    >
+                      <Mail className="h-4 w-4" />
+                      <span>Alternative: Send via Default Mail App</span>
+                    </a>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      setSubmitSuccess(false);
+                      setSubmittedUrls(null);
+                      setFormData({ name: "", email: "", phone: "", course: "", comments: "" });
+                    }}
+                    className="text-xs text-cyan-400 hover:text-cyan-300 underline transition-colors cursor-pointer pt-3 font-semibold"
+                  >
+                    Send Another Inquiry / Reset Form
+                  </button>
                 </div>
               ) : (
                 <form id="enroll-inquiry-form" onSubmit={handleSubmit} className="space-y-5">
@@ -223,7 +287,7 @@ ${formData.name}`;
                         id="fullname"
                         type="text"
                         required
-                        placeholder="e.g. Rahul Verma"
+                        placeholder="e.g. John"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full bg-slate-950/40 hover:bg-slate-950/60 focus:bg-slate-950/80 border border-white/10 focus:border-cyan-500/50 text-white px-4 py-3 rounded-xl text-sm transition-all focus:outline-none focus:ring-1 focus:ring-cyan-500/20"
@@ -233,13 +297,13 @@ ${formData.name}`;
                     {/* Email address */}
                     <div className="space-y-1.5">
                       <label htmlFor="email" className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                        Corporate Email *
+                        Email *
                       </label>
                       <input
                         id="email"
                         type="email"
                         required
-                        placeholder="rahul@enterprise.com"
+                        placeholder="john@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="w-full bg-slate-950/40 hover:bg-slate-950/60 focus:bg-slate-950/80 border border-white/10 focus:border-cyan-500/50 text-white px-4 py-3 rounded-xl text-sm transition-all focus:outline-none focus:ring-1 focus:ring-cyan-500/20"
@@ -267,7 +331,7 @@ ${formData.name}`;
                     {/* Track selection */}
                     <div className="space-y-1.5">
                       <label htmlFor="track" className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                        Upskilling Target Program *
+                        Select Program *
                       </label>
                       <select
                         id="track"
@@ -277,11 +341,11 @@ ${formData.name}`;
                         className="w-full bg-slate-950/40 hover:bg-slate-950/60 focus:bg-slate-950/80 border border-white/10 focus:border-cyan-500/50 text-white px-4 py-3 rounded-xl text-sm transition-all focus:outline-none focus:ring-1 focus:ring-cyan-500/20 cursor-pointer"
                       >
                         <option value="" className="bg-slate-900">Select a Program</option>
-                        <option value="SAP S/4HANA Finance" className="bg-slate-900">SAP S/4HANA Finance (FICO)</option>
-                        <option value="Executive Business Intelligence" className="bg-slate-900">Power BI Business Intelligence</option>
-                        <option value="Certified Corporate GST Practitioner" className="bg-slate-900">Certified GST Practitioner</option>
-                        <option value="Financial Accounting" className="bg-slate-900">Financial Accounting Masterclass</option>
-                        <option value="Enterprise Analytics" className="bg-slate-900">Enterprise Analytics & SQL</option>
+                        {courses.map((c) => (
+                          <option key={c.id} value={c.title} className="bg-slate-900">
+                            {c.title} {c.subtitle ? `(${c.subtitle})` : ""}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
