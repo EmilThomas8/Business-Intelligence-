@@ -72,13 +72,13 @@ export default function Hero({ onNavigate }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="font-heading font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1]"
+            className="font-georgia-condensed font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1]"
+            style={{ fontFamily: '"Georgia Pro Condensed", "Georgia Pro", "Georgia", "Bookman Old Style", serif' }}
           >
-            Redefining{" "}
+            Build skills{" "}
             <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm font-extrabold">
-              Enterprise
-            </span>{" "}
-            Intelligence & Finance Training
+              build your future
+            </span>
           </motion.h1>
 
           {/* Subtitle description */}
