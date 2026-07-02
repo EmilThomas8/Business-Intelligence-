@@ -40,6 +40,12 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
           >
             Lab
           </span>
+          <span
+            className="text-[8px] sm:text-[9px] font-medium tracking-normal text-slate-400 mt-1 italic leading-tight"
+            style={{ fontFamily: '"Droid Serif", "Georgia", serif' }}
+          >
+            Where Expertise Meets Enterprise.
+          </span>
         </div>
       )}
     </div>
