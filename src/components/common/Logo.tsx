@@ -4,6 +4,7 @@
  */
 
 import React from "react";
+import logoImg from "../../assets/images/logo1.webp";
 
 interface LogoProps {
   className?: string;
@@ -12,7 +13,6 @@ interface LogoProps {
 }
 
 export default function Logo({ className = "h-12 w-12", showText = true, light = false }: LogoProps) {
-  const logoImg = "/src/assets/images/logo1.webp";
   const textColor = light ? "text-white" : "text-slate-100";
 
   return (
