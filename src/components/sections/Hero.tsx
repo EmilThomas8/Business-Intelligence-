@@ -22,6 +22,59 @@ export default function Hero({ onNavigate }: HeroProps) {
   // Path to our newly generated top-tier background image
   const backgroundHero = "/src/assets/images/classroom_hero_1782808064997.jpg";
 
+  const renderAnimatedText = (text: string, startDelay: number, isGradient: boolean = false) => {
+    const words = text.split(" ");
+    let charCount = 0;
+
+    return words.map((word, wordIdx) => {
+      const chars = Array.from(word);
+      return (
+        <span
+          key={wordIdx}
+          className={`inline-block whitespace-nowrap ${
+            isGradient
+              ? "bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm font-extrabold"
+              : ""
+          }`}
+        >
+          {chars.map((char) => {
+            const absoluteIndex = charCount++;
+            const xDirection = absoluteIndex % 2 === 0 ? 1 : -1;
+            return (
+              <motion.span
+                key={absoluteIndex}
+                className="inline-block origin-center"
+                initial={{ opacity: 0, x: -15 * xDirection, y: 35 }}
+                animate={{
+                  opacity: [0, 1, 1, 1, 1, 1, 1],
+                  x: [
+                    -15 * xDirection,
+                    12 * xDirection,
+                    -8 * xDirection,
+                    5 * xDirection,
+                    -2 * xDirection,
+                    0
+                  ],
+                  y: [35, -20, 12, -7, 3, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  ease: "easeInOut",
+                  delay: startDelay + absoluteIndex * 0.04,
+                }}
+              >
+                {char}
+              </motion.span>
+            );
+          })}
+          {wordIdx < words.length - 1 && (
+            <span className="inline-block">&nbsp;</span>
+          )}
+        </span>
+      );
+    });
+  };
+
   return (
     <section
       id="hero"
@@ -67,19 +120,14 @@ export default function Hero({ onNavigate }: HeroProps) {
           </motion.div>
 
           {/* Core Headline */}
-          <motion.h1
+          <h1
             id="hero-headline"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
             className="font-georgia-condensed font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-[1.1]"
             style={{ fontFamily: '"Georgia Pro Condensed", "Georgia Pro", "Georgia", "Bookman Old Style", serif' }}
           >
-            Build skills{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-sm font-extrabold">
-              build your future
-            </span>
-          </motion.h1>
+            {renderAnimatedText("Build skills ", 0.1)}
+            {renderAnimatedText("build your future", 0.6, true)}
+          </h1>
 
           {/* Subtitle description */}
           <motion.p
@@ -334,3 +382,4 @@ export default function Hero({ onNavigate }: HeroProps) {
     </section>
   );
 }
+
