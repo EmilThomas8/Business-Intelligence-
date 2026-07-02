@@ -28,10 +28,16 @@ export default function Logo({ className = "h-12 w-12", showText = true, light =
 
       {showText && (
         <div className="flex flex-col">
-          <span className={`font-heading font-extrabold text-base sm:text-lg tracking-tight leading-tight transition-colors duration-300 ${textColor}`}>
+          <span
+            className={`font-droid-serif font-bold text-base sm:text-lg tracking-tight leading-tight transition-colors duration-300 ${textColor}`}
+            style={{ fontFamily: '"Droid Serif", "Georgia", serif' }}
+          >
             Business Intelligence
           </span>
-          <span className="text-[10px] font-mono font-bold tracking-[0.24em] text-cyan-400 uppercase leading-none mt-0.5">
+          <span
+            className="text-[10px] font-droid-serif font-bold tracking-[0.24em] text-cyan-400 uppercase leading-none mt-1"
+            style={{ fontFamily: '"Droid Serif", "Georgia", serif' }}
+          >
             Lab
           </span>
         </div>

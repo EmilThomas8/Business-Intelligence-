@@ -149,7 +149,7 @@ export const courses: Course[] = [
   // --- Analytics & Excel ---
   {
     id: "excel-power-bi",
-    title: "EXCEL WITH POWER BI",
+    title: "ADVANCE EXCEL WITH POWER BI ANALYTICS",
     subtitle: "Business Intelligence & Data Analytics",
     category: "Analytics & Excel",
     description: "High-end comprehensive program combining advanced spreadsheet modeling with multi-dimensional Power BI dashboard architecture and DAX query writing.",
