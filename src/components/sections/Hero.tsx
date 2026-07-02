@@ -6,6 +6,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { ArrowRight, Sparkles, Shield, CheckCircle, Database, BarChart3, Receipt, Landmark } from "lucide-react";
+import Logo from "../common/Logo";
 
 const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -38,6 +39,11 @@ export default function Hero({ onNavigate }: HeroProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/90 to-slate-950/80" />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.12)_0%,transparent_70%)]" />
+
+        {/* Large Brand Watermark Logo Background */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-[0.05] sm:opacity-[0.07] pointer-events-none select-none z-0">
+          <Logo className="w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] lg:w-[850px] lg:h-[850px] animate-pulse [animation-duration:12s]" showText={false} />
+        </div>
 
         {/* Ambient floating blur particles */}
         <div className="absolute top-1/4 left-1/5 w-72 h-72 rounded-full bg-blue-600/10 blur-[100px] animate-pulse" />

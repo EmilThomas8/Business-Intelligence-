@@ -39,22 +39,13 @@ export default function FeaturedPrograms({
   ).filter((c) => !popularOnly || c.isPopular);
 
   const courseImages: Record<string, string> = {
-    "sap-fico": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&h=400&fit=crop",
+    "sap-b1": "https://cdn.shopaccino.com/igmguru/products/sap-business-one-training-online-2390474615788753m-81886647867518_l.webp?v=548",
+    "sap-fico": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvY_GrcrVpvr4NxsOYiPCjLCLY1fjWps3my8gLELI0ubTKySsa1k70Kk&s=10",
     "sap-mm": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&h=400&fit=crop",
-    "sap-sd": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&fit=crop",
-    "sap-s4-hana": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&h=400&fit=crop",
-    "sap-b1": "https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=600&h=400&fit=crop",
-    "sap-b1-adv": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&h=400&fit=crop",
-    
-    "business-excel": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&h=400&fit=crop",
-    "business-excel-analytics": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600&h=400&fit=crop",
-    "adv-excel-power-bi": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&h=400&fit=crop",
-    "excel-power-bi-prof": "https://images.unsplash.com/photo-1542744094-3a31f103e35f?q=80&w=600&h=400&fit=crop",
-    
-    "gst-filing": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
-    "itr-filing": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
-    "essentials-gst-itr": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
-    "uae-vat": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&h=400&fit=crop",
+    "sap-sd": "https://media.licdn.com/dms/image/v2/D4D12AQEFjpvXxn2Z4A/article-cover_image-shrink_720_1280/B4DZhWCwMnGkAI-/0/1753790219751?e=2147483647&v=beta&t=Y5n5rKPOwfQh2G_zpjFN491HgZAZk6Qvw1Y60694JXI",
+    "e-filing": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
+    "uae-vat": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCy7rr9_RQts-uGDFbgULMRHstHFoH3gy4Kb-7hHjcZwGM0_g2uDl3X-Ix&s=10",
+    "excel-power-bi": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTC8Vlg7nGi7L01LkUFuPOPyoN1Ryf4Ab-63xLbB2_4ONGKVFvCzBZ7r9f&s=10"
   };
 
   return (
@@ -244,7 +235,7 @@ export default function FeaturedPrograms({
               onClick={onExploreAllClick}
               className="px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-bold rounded-2xl shadow-xl shadow-blue-500/20 hover:shadow-blue-500/35 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2.5 cursor-pointer group"
             >
-              <span>Explore All 14+ Course Offers</span>
+              <span>Explore All 7 Core Programs</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
