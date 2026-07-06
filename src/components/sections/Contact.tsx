@@ -48,7 +48,7 @@ export default function Contact({ prefilledCourse, prefilledComments }: ContactP
     }
   }, [prefilledComments]);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.phone) return;
 
@@ -86,37 +86,42 @@ ${formData.name}`;
       mailto: mailtoUrl
     });
 
-    try {
-      // Dispatch server-side email request
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          course: formData.course || "General Up-skilling",
-          comments: formData.comments,
-        }),
-      });
-    } catch (err) {
-      console.error("[Contact API Dispatch Error]:", err);
+    // 1. Immediately trigger the WhatsApp launcher and email composer to prevent popup blocker!
+    // Since these are initiated synchronously inside the submit event handler, they bypass standard browser popup blocks.
+    
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+    
+    // Open Gmail web composer in a new tab
+    const gmailOpened = window.open(gmailUrl, "_blank", "noopener,noreferrer");
+    
+    // Fallback: If Gmail window was blocked, trigger standard mailto on the current page context
+    if (!gmailOpened) {
+      setTimeout(() => {
+        window.location.href = mailtoUrl;
+      }, 100);
     }
 
-    // 1. Open WhatsApp in a new tab (direct result of user click, not blocked)
-    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
-
-    // 2. Open Gmail web composer or trigger mailto link
-    // Rather than multiple window.opens which trigger popup blockers,
-    // we use window.location.href for the mailto url, which launches the mail app or Gmail handler instantly
-    setTimeout(() => {
-      window.location.href = mailtoUrl;
-    }, 250);
-
-    setIsSubmitting(false);
-    setSubmitSuccess(true);
+    // 2. Dispatch server-side email request in the background (non-blocking for UI)
+    fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        course: formData.course || "General Up-skilling",
+        comments: formData.comments,
+      }),
+    })
+      .then((res) => res.json())
+      .catch((err) => console.error("[Contact API Dispatch Error]:", err))
+      .finally(() => {
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+      });
   };
 
   return (

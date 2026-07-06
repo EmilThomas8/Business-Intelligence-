@@ -5,7 +5,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { ArrowRight, Sparkles, Shield, CheckCircle, Database, BarChart3, Receipt, Landmark } from "lucide-react";
+import { ArrowRight, Sparkles, Shield, CheckCircle, Database, BarChart3, Receipt, Landmark, Cpu } from "lucide-react";
 import Logo from "../common/Logo";
 
 const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
