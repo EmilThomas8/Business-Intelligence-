@@ -59,7 +59,12 @@ export default function Footer({ onNavigate }: FooterProps) {
 
               <div className="flex items-center gap-3 text-xs sm:text-sm">
                 <Mail className="h-4 w-4 text-cyan-400 shrink-0" />
-                <a href="mailto:businessintelligencelab7@gmail.com" className="text-slate-300 hover:text-white transition-colors font-light">
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=businessintelligencelab7@gmail.com&su=Inquiry%20-%20Business%20Intelligence%20Lab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-white transition-colors font-light"
+                >
                   businessintelligencelab7@gmail.com
                 </a>
               </div>

@@ -148,44 +148,57 @@ ${formData.name}`;
 
             {/* Address Blocks */}
             <div className="space-y-5">
-              <div className="flex items-start gap-3.5">
-                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0">
+              <a
+                href="https://maps.google.com/?q=3rd+Floor,+Lotus+Paradise+Centre,+Karangalpady,+Mangalore+–+575002,+Karnataka,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3.5 group cursor-pointer"
+              >
+                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 group-hover:text-cyan-300 transition-all duration-300">
                   <MapPin className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider">Office Location</span>
-                  <p className="text-white font-semibold text-sm">
+                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider group-hover:text-cyan-400 transition-colors">Office Location</span>
+                  <p className="text-white font-semibold text-sm group-hover:text-cyan-200 transition-colors">
                     3rd Floor, Lotus Paradise Centre
                   </p>
-                  <p className="text-slate-400 text-xs">Karangalpady, Mangalore – 575002, Karnataka, India</p>
+                  <p className="text-slate-400 text-xs group-hover:text-slate-300 transition-colors">Karangalpady, Mangalore – 575002, Karnataka, India</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-3.5">
-                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0">
+              <a
+                href="tel:+919480020875"
+                className="flex items-start gap-3.5 group cursor-pointer"
+              >
+                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 group-hover:text-cyan-300 transition-all duration-300">
                   <Phone className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider">Admissions Hotline</span>
-                  <p className="text-white font-semibold text-sm">
+                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider group-hover:text-cyan-400 transition-colors">Admissions Hotline</span>
+                  <p className="text-white font-semibold text-sm group-hover:text-cyan-200 transition-colors">
                     +91 94800 20875
                   </p>
-                  <p className="text-slate-400 text-xs">Monday to Saturday, 9:00 AM – 6:00 PM IST</p>
+                  <p className="text-slate-400 text-xs group-hover:text-slate-300 transition-colors">Monday to Saturday, 9:00 AM – 6:00 PM IST</p>
                 </div>
-              </div>
+              </a>
 
-              <div className="flex items-start gap-3.5">
-                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0">
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=businessintelligencelab7@gmail.com&su=Inquiry%20-%20Business%20Intelligence%20Lab"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3.5 group cursor-pointer"
+              >
+                <div className="p-3 bg-slate-900/60 border border-white/5 rounded-xl text-cyan-400 shadow-sm flex-shrink-0 group-hover:bg-cyan-500/10 group-hover:border-cyan-500/30 group-hover:text-cyan-300 transition-all duration-300">
                   <Mail className="h-5 w-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider">Official Email</span>
-                  <p className="text-white font-semibold text-sm">
+                  <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider group-hover:text-cyan-400 transition-colors">Official Email</span>
+                  <p className="text-white font-semibold text-sm group-hover:text-cyan-200 transition-colors">
                     businessintelligencelab7@gmail.com
                   </p>
-                  <p className="text-slate-400 text-xs">General and corporate training inquiries</p>
+                  <p className="text-slate-400 text-xs group-hover:text-slate-300 transition-colors">General and corporate training inquiries</p>
                 </div>
-              </div>
+              </a>
             </div>
 
             {/* Interactive Google Map iframe embedded elegantly inside clean border card */}
