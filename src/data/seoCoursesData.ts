@@ -35,7 +35,7 @@ export const seoCourses: SEOCourseData[] = [
       "At Business Intelligence Lab, our SAP B1 course is delivered by certified ERP specialists. Students gain direct access to active sandbox servers where they configure chart of accounts, design item master lists, execute procurement-to-pay (P2P) cycles, track sales pipelines, and analyze financial statements in real-time. This hands-on pedagogy ensures that when you step into an interview in Mangalore or Bangalore, you demonstrate real-world system mastery rather than just certificate-level familiarity.",
       "The curriculum is continuously updated to reflect the latest SAP S/4HANA advancements, ensuring your skills remain valuable for years. Whether you are a fresh BCom, MCom, or MBA graduate from Mangalore University, or an experienced accountant seeking an upgrade, our structured training modules provide the complete toolset required to succeed as an ERP functional advisor or administrator."
     ],
-    duration: "90 Hours (2 Months of Hands-on Lab Sessions)",
+    duration: "90 Hours (45 Days of Hands-on Lab Sessions)",
     whoIsItFor: [
       "Fresh Graduates (B.Com, BBA, M.Com, MBA) seeking high-paying corporate roles in Karnataka.",
       "Working Accountants and Finance Professionals aiming to upgrade from basic accounting tools to enterprise-grade ERPs.",
@@ -140,7 +140,7 @@ export const seoCourses: SEOCourseData[] = [
       "At BIL Mangalore, our curriculum transitions you from standard bookkeeping into advanced enterprise ERP workflows. You will practice real-time posting scenarios on the SAP sandbox, gaining hands-on exposure to both classic SAP GUI and the modern SAP Fiori interface powered by SAP S/4HANA Finance. This blend of classic stability and cutting-edge database speed is precisely what top-tier employers in Karnataka demand.",
       "Under the mentorship of veteran ERP consultants, you will work on simulated corporate implementations. You will configure fiscal year variants, chart of accounts, posting keys, and GST tax codes from scratch. By the time you complete this intensive training, you will have completed multiple case studies that directly mirror the challenges faced by corporate finance teams in Bangalore, Mangaluru, and international business hubs."
     ],
-    duration: "90 Hours (2 Months of Project-Based Learning)",
+    duration: "90 Hours (45 Days of Project-Based Learning)",
     whoIsItFor: [
       "Chartered Accountants (CAs), Cost Accountants (CMAs), and Company Secretaries (CSs) looking to automate client configurations.",
       "M.Com, MBA Finance, and B.Com graduates from Mangalore University and other major institutes seeking high-grade corporate placements.",
@@ -244,7 +244,7 @@ export const seoCourses: SEOCourseData[] = [
       "At our state-of-the-art training center in Mangalore, Karnataka, you will gain hands-on experience configuring procurement pathways. You will set up purchasing organizations, plant codes, and storage locations from scratch. You will learn how to handle automatic account determination, linking inventory additions directly with financial ledger postings.",
       "Our SAP MM course is led by veteran logistics trainers who have years of experience implementing SAP in major logistics hubs. With dedicated sandbox access, you will configure inventory valuation rules, manage batch and serial numbers, and process zero-rated purchase scenarios under Indian GST rules, ensuring your skills are immediately applicable to local and multinational employers alike."
     ],
-    duration: "90 Hours (2 Months of Intensive Lab Training)",
+    duration: "90 Hours (45 Days of Intensive Lab Training)",
     whoIsItFor: [
       "Supply Chain, Procurement, and Warehouse Executives looking to migrate to enterprise ERP platforms.",
       "Engineers (B.E., B.Tech) and Management Graduates (MBA in Operations/Logistics) aiming for global supply chain roles.",
@@ -348,7 +348,7 @@ export const seoCourses: SEOCourseData[] = [
       "Our SAP SD curriculum at BIL Mangalore, Karnataka, guides you through the complex configurations of sales areas, distribution channels, and sales groups. You will learn to build advanced pricing procedures, integrating discounts, freight charges, and GST logic automatically. You will practice managing customer master records and coordinating delivery pipelines in real-time.",
       "With active mentorship from professional SAP SD consultants, you will work through real corporate case studies. You will configure availability checks (ATP), credit management, third-party sales processing, and intercompany billing scenarios. This level of functional detail is exactly what top-tier employers in Bangalore, Mangaluru, and global hubs seek."
     ],
-    duration: "90 Hours (2 Months of Project-Based Learning)",
+    duration: "90 Hours (45 Days of Project-Based Learning)",
     whoIsItFor: [
       "Sales, Marketing, and Relationship Managers wanting to master enterprise sales systems.",
       "MBA, BBA, B.Com, and M.Com graduates from Mangalore University looking for specialized corporate career entries.",
@@ -662,7 +662,7 @@ export const seoCourses: SEOCourseData[] = [
       "At BIL, you will train on real corporate datasets. You will master Excel functions like VLOOKUP, XLOOKUP, INDEX-MATCH, SUMIFS, and advanced nesting. You will learn to use Power Query to clean messy datasets automatically, turning days of manual work into one-click refreshes. Then, you will connect those datasets directly to Power BI to build spectacular dashboards.",
       "The program is led by certified Microsoft Office and BI experts who share real-world shortcuts and productivity secrets. You will design functional financial models, retail sales dashboards, and HR tracking grids. This practical training ensures you can walk into any office in Karnataka or the Gulf region and instantly improve their reporting systems."
     ],
-    duration: "90 Hours (2 Months of Practical Labs & Projects)",
+    duration: "90 Hours (45 Days of Practical Labs & Projects)",
     whoIsItFor: [
       "Students (B.Com, BBA, M.Com, MBA) who want to add an essential, high-value skill to their corporate resumes.",
       "Accounts, MIS, and Administrative Executives who want to automate repetitive calculations and reporting.",

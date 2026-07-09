@@ -174,20 +174,12 @@ export default function CourseSEOPage({
           </p>
 
           {/* Quick Stats Strip */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-white/5">
             <div className="bg-slate-900/40 p-4 rounded-xl border border-white/5 flex items-center gap-3">
               <Clock className="h-5 w-5 text-cyan-400 shrink-0" />
               <div>
                 <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Duration</p>
                 <p className="text-sm font-semibold text-white">{courseData.duration}</p>
-              </div>
-            </div>
-
-            <div className="bg-slate-900/40 p-4 rounded-xl border border-white/5 flex items-center gap-3">
-              <Award className="h-5 w-5 text-emerald-400 shrink-0" />
-              <div>
-                <p className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Certification</p>
-                <p className="text-sm font-semibold text-white">Govt. Registered</p>
               </div>
             </div>
 

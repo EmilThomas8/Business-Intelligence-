@@ -67,7 +67,7 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
               className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white font-semibold text-sm rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex items-center justify-center gap-2"
             >
               <WhatsAppIcon className="w-5 h-5 text-emerald-400 fill-emerald-400/10" />
-              <span>Inquire on WhatsApp</span>
+              <span>Enquire on WhatsApp</span>
             </a>
           </div>
         </div>
