@@ -24,10 +24,10 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
         <div className="flex justify-start mb-8">
           <button
             onClick={onBackToHome}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/50 hover:bg-slate-900/80 border border-white/5 hover:border-white/10 text-slate-400 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer group"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900/50 hover:bg-slate-900/80 border border-white/5 hover:border-white/10 text-slate-400 hover:text-white rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer group text-cyan-400"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
-            <span>Back to Home</span>
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform text-cyan-400" />
+            <span className="text-cyan-400">Back to Home</span>
           </button>
         </div>
 
@@ -40,7 +40,7 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
 
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-heading font-extrabold text-white tracking-tight leading-none bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
-              14+ Professional Courses
+              Professional Courses
             </h1>
             <p className="text-2xl sm:text-3xl font-sans font-bold text-cyan-400 tracking-tight">
               Built for Real Careers

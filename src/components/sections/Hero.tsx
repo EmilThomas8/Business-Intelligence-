@@ -312,7 +312,7 @@ export default function Hero({ onNavigate }: HeroProps) {
                   Core Ledgers
                 </span>
                 <h4 className="font-heading font-bold text-sm text-white">
-                  Financial Accounting
+                  UAE VAT
                 </h4>
               </div>
             </div>
