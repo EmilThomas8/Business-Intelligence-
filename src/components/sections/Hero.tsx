@@ -14,6 +14,7 @@ const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   </svg>
 );
 
+
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
 }
@@ -139,6 +140,7 @@ export default function Hero({ onNavigate }: HeroProps) {
           >
             SAP, Analytics & Finance training for professionals who want real skills and real results. Industry-oriented. Hands-on. Certification included.
           </motion.p>
+
 
           {/* Primary & Secondary Call to Actions */}
           <motion.div

@@ -14,9 +14,10 @@ import Footer from "./components/layout/Footer";
 import FloatingNav from "./components/layout/FloatingNav";
 import { seoCourses } from "./data/seoCoursesData";
 import CourseSEOPage from "./components/sections/CourseSEOPage";
+import Team from "./components/sections/Team";
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'courses' | 'seo-course'>("home");
+  const [view, setView] = useState<'home' | 'courses' | 'seo-course' | 'team'>("home");
   const [activeCourseSlug, setActiveCourseSlug] = useState<string>("");
   const [prefilledCourse, setPrefilledCourse] = useState("");
   const [prefilledComments, setPrefilledComments] = useState("");
@@ -38,6 +39,10 @@ export default function App() {
         setView("courses");
         window.scrollTo({ top: 0, behavior: "instant" as any });
         return;
+      } else if (path === "/team" || path === "/team/") {
+        setView("team");
+        window.scrollTo({ top: 0, behavior: "instant" as any });
+        return;
       }
       setView("home");
     };
@@ -53,6 +58,10 @@ export default function App() {
     if (sectionId === "courses") {
       window.history.pushState(null, "", "/courses");
       setView("courses");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (sectionId === "team") {
+      window.history.pushState(null, "", "/team");
+      setView("team");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       const isSwitchingView = view !== "home";
@@ -118,7 +127,7 @@ export default function App() {
       <Navbar
         onEnrollClick={() => handleEnrollClick()}
         onNavigate={navigateTo}
-        activeSection={view === "courses" ? "courses" : view === "seo-course" ? "courses" : "hero"}
+        activeSection={view === "courses" ? "courses" : view === "seo-course" ? "courses" : view === "team" ? "team" : "hero"}
       />
 
       {/* Main Sections Wrapper */}
@@ -184,6 +193,20 @@ export default function App() {
                 onEnrollClick={handleEnrollClick}
                 popularOnly={false}
                 onNavigateToCourseSlug={navigateToCourseSlug}
+              />
+            </motion.div>
+          ) : view === "team" ? (
+            <motion.div
+              key="team"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="pt-20"
+            >
+              <Team
+                onBackToHome={() => navigateTo("hero")}
+                onNavigate={navigateTo}
               />
             </motion.div>
           ) : (

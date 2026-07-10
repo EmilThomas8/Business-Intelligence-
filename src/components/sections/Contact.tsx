@@ -206,7 +206,7 @@ ${formData.name}`;
               <iframe
                 title="Business Intelligence Lab Location Map"
                 src="https://maps.google.com/maps?q=Lotus%20Paradise%20Centre,%20Karangalpady,%20Mangalore%20-%20575002&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0 filter grayscale invert contrast-[0.9]"
+                className="w-full h-full border-0"
                 allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

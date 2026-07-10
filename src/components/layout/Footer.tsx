@@ -102,6 +102,14 @@ export default function Footer({ onNavigate }: FooterProps) {
               </li>
               <li>
                 <button
+                  onClick={() => onNavigate("team")}
+                  className="text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer block text-left"
+                >
+                  Team
+                </button>
+              </li>
+              <li>
+                <button
                   onClick={() => onNavigate("contact")}
                   className="text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer block text-left"
                 >

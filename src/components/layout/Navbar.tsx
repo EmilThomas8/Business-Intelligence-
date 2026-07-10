@@ -33,6 +33,7 @@ export default function Navbar({ onNavigate, activeSection = "hero", onEnrollCli
   const navItems = [
     { label: "Home", id: "hero" },
     { label: "Courses", id: "courses" },
+    { label: "Team", id: "team" },
     { label: "Contact", id: "contact" },
   ];
 
@@ -69,19 +70,23 @@ export default function Navbar({ onNavigate, activeSection = "hero", onEnrollCli
                     key={item.id}
                     id={`nav-item-${item.id}`}
                     onClick={() => onNavigate(item.id)}
-                    className={`relative px-4 py-2 font-sans text-sm font-semibold tracking-wide transition-all duration-300 rounded-lg cursor-pointer ${
+                    className={`relative px-4 py-2 font-sans text-sm font-semibold tracking-wide transition-all duration-300 rounded-lg cursor-pointer group ${
                       isActive
                         ? "text-primary font-bold"
-                        : isScrolled
-                        ? "text-slate-300 hover:text-white hover:bg-white/10"
-                        : "text-slate-300 hover:text-white hover:bg-white/10"
+                        : "text-slate-300 hover:text-white"
                     }`}
                   >
                     {item.label}
+                    
+                    {/* Animated Underline on Hover */}
+                    {!isActive && (
+                      <span className="absolute bottom-1 left-4 right-4 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-center duration-300 ease-out rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]" />
+                    )}
+
                     {isActive && (
                       <motion.span
                         layoutId="activeNavIndicator"
-                        className="absolute bottom-1 left-4 right-4 h-0.5 bg-primary rounded-full"
+                        className="absolute bottom-1 left-4 right-4 h-0.5 bg-primary rounded-full shadow-[0_0_8px_rgba(37,99,235,0.6)]"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}

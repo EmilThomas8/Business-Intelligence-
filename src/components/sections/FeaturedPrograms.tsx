@@ -51,13 +51,13 @@ export default function FeaturedPrograms({
   ).filter((c) => !popularOnly || c.isPopular);
 
   const courseImages: Record<string, string> = {
-    "sap-b1": "https://cdn.shopaccino.com/igmguru/products/sap-business-one-training-online-2390474615788753m-81886647867518_l.webp?v=548",
-    "sap-fico": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqvY_GrcrVpvr4NxsOYiPCjLCLY1fjWps3my8gLELI0ubTKySsa1k70Kk&s=10",
-    "sap-mm": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&h=400&fit=crop",
-    "sap-sd": "https://media.licdn.com/dms/image/v2/D4D12AQEFjpvXxn2Z4A/article-cover_image-shrink_720_1280/B4DZhWCwMnGkAI-/0/1753790219751?e=2147483647&v=beta&t=Y5n5rKPOwfQh2G_zpjFN491HgZAZk6Qvw1Y60694JXI",
+    "sap-b1": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&h=400&fit=crop",
+    "sap-fico": "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=600&h=400&fit=crop",
+    "sap-mm": "https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=600&h=400&fit=crop",
+    "sap-sd": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=600&h=400&fit=crop",
     "e-filing": "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=600&h=400&fit=crop",
-    "uae-vat": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCy7rr9_RQts-uGDFbgULMRHstHFoH3gy4Kb-7hHjcZwGM0_g2uDl3X-Ix&s=10",
-    "advanced-excel": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTC8Vlg7nGi7L01LkUFuPOPyoN1Ryf4Ab-63xLbB2_4ONGKVFvCzBZ7r9f&s=10"
+    "uae-vat": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&h=400&fit=crop",
+    "advanced-excel": "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=600&h=400&fit=crop"
   };
 
   return (
@@ -125,6 +125,7 @@ export default function FeaturedPrograms({
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
                 key={course.id}
+                id={`course-card-${course.id}`}
                 className="group flex flex-col justify-between rounded-3xl bg-slate-900/30 backdrop-blur-md border border-white/5 hover:border-cyan-500/30 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(6,182,212,0.12)] shadow-2xl relative"
               >
               {/* Popular stamp */}
