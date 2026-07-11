@@ -244,14 +244,8 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
               ✨ SELECT A PROGRAM TO EXPLORE COURSE DETAILS
             </span>
             
-            {/* Smooth Edge Gradients & Carousel Window */}
+            {/* Carousel Window */}
             <div className="relative w-full overflow-hidden py-2 px-1">
-              {/* Left Vignette Edge Fade */}
-              <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-[#0B0F19] via-[#0B0F19]/80 to-transparent pointer-events-none z-20" />
-              
-              {/* Right Vignette Edge Fade */}
-              <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-[#0B0F19] via-[#0B0F19]/80 to-transparent pointer-events-none z-20" />
-
               {/* Scroll viewport */}
               <div
                 ref={scrollRef}
@@ -261,7 +255,7 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
                 onMouseLeave={handleMouseUpOrLeave}
                 onTouchStart={() => setIsPaused(true)}
                 onTouchEnd={() => setIsPaused(false)}
-                className="w-full overflow-x-auto flex flex-row flex-nowrap gap-3 sm:gap-4 py-3 px-12 scrollbar-none select-none touch-pan-x cursor-grab active:cursor-grabbing scroll-smooth"
+                className="w-full overflow-x-auto flex flex-row flex-nowrap gap-3 sm:gap-4 py-3 px-4 scrollbar-none select-none touch-pan-x cursor-grab active:cursor-grabbing scroll-smooth"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 {duplicatedCourseList.map((item, index) => (
