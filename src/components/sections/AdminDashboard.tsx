@@ -144,6 +144,9 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
   const loadDatabase = async () => {
     try {
       setLoading(true);
+      // Automatically seed initial categories and blogs if needed (safe because user is authenticated)
+      await categoryService.seedInitialDataIfNeeded();
+      
       const [fetchedBlogs, fetchedCategories] = await Promise.all([
         blogService.getAllBlogs(false), // get ALL blogs including drafts
         categoryService.getAllCategories()

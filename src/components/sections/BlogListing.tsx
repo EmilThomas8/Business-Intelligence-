@@ -36,9 +36,6 @@ export default function BlogListing({ onNavigateToBlogSlug, onNavigateToAdmin }:
     async function loadData() {
       try {
         setLoading(true);
-        // Ensure defaults are initialized first
-        await authService.seedAdminUserIfNeeded();
-        await categoryService.seedInitialDataIfNeeded();
         
         // Fetch fresh lists
         const [fetchedBlogs, fetchedCategories] = await Promise.all([

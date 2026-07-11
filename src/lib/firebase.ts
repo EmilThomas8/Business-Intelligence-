@@ -2,20 +2,31 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { initializeFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+import appletConfig from "../../firebase-applet-config.json";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN!,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID!,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID!,
+  apiKey: appletConfig.apiKey,
+  authDomain: appletConfig.authDomain,
+  projectId: appletConfig.projectId,
+  storageBucket: appletConfig.storageBucket,
+  messagingSenderId: appletConfig.messagingSenderId,
+  appId: appletConfig.appId,
 };
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-export const db = process.env.NEXT_PUBLIC_FIREBASE_DB_ID
-  ? initializeFirestore(app, { experimentalForceLongPolling: true }, process.env.NEXT_PUBLIC_FIREBASE_DB_ID)
-  : initializeFirestore(app, { experimentalForceLongPolling: true });
+
+// Use both experimentalForceLongPolling and useFetchStreams: false to guarantee
+// reliable connectivity inside the sandboxed iframe preview environment.
+export const db = appletConfig.firestoreDatabaseId
+  ? initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+      useFetchStreams: false,
+    } as any, appletConfig.firestoreDatabaseId)
+  : initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+      useFetchStreams: false,
+    } as any);
+
 export const storage = getStorage(app);

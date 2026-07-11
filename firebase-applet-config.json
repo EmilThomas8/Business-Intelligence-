@@ -1,11 +1,10 @@
 {
-  "projectId": "starry-precinct-bbwbv",
-  "appId": "1:579011647509:web:889151d9ce15a51a0d161c",
-  "apiKey": "AIzaSyCOdoNdHmI5XO5Dtj6Q5qbJjgPAtbfqVdQ",
-  "authDomain": "starry-precinct-bbwbv.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-businessintellig-e3b9a5f8-70b3-4909-870f-8b23d59baebc",
-  "storageBucket": "starry-precinct-bbwbv.firebasestorage.app",
-  "messagingSenderId": "579011647509",
-  "measurementId": "",
-  "oAuthClientId": "579011647509-qr53u0m3are3jp2ru7eh3dcfmi4t9osp.apps.googleusercontent.com"
+  "projectId": "bils-580a1",
+  "appId": "1:367162360459:web:cbec0178af38e1ee774a8e",
+  "apiKey": "AIzaSyCpocQKSNVnqPt2n2lW8mUV-GuC-S2P4Gs",
+  "authDomain": "bils-580a1.firebaseapp.com",
+  "storageBucket": "bils-580a1.firebasestorage.app",
+  "messagingSenderId": "367162360459",
+  "measurementId": "G-XMF8SKRP50",
+  "firestoreDatabaseId": "(default)"
 }

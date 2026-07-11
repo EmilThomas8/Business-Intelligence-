@@ -60,32 +60,43 @@ export const authService = {
 
   // Check and seed default credentials if no admins exist
   async seedAdminUserIfNeeded(): Promise<void> {
+    const email = "admin@sapinstitute.com";
+    const password = "AdminPassword123";
     try {
-      const adminsCol = collection(db, ADMINS_COLLECTION);
-      const q = query(adminsCol, limit(1));
-      const snapshot = await getDocs(q);
-
-      // If the admin collection is empty, automatically provision the default test admin
-      if (snapshot.empty) {
-        console.log("No administrators found in system. Provisioning default test admin...");
-        // Use a standard test email & password
-        const email = "admin@sapinstitute.com";
-        const password = "AdminPassword123";
-        
-        try {
-          // Attempt standard registration
-          await this.registerAdmin(email, password, "Head of SAP Training");
-          console.log("Default admin account provisioned: admin@sapinstitute.com / AdminPassword123");
-        } catch (authError: any) {
-          // If user already exists in Auth but not in Firestore, write the doc
-          if (authError.code === "auth/email-already-in-use") {
-            // We can prompt login
-            console.log("Default user already in Auth database.");
-          }
-        }
+      // 1. Attempt standard login with default admin credentials
+      const user = await this.login(email, password);
+      console.log("Successfully logged in as default admin during seeding check.");
+      
+      // 2. Since we are successfully logged in, we have permissions to check and write to /admins/{uid}
+      const docRef = doc(db, ADMINS_COLLECTION, user.uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        const adminProfile: Admin = {
+          uid: user.uid,
+          name: "Head of SAP Training",
+          email,
+          role: "Administrator"
+        };
+        await setDoc(docRef, adminProfile);
+        console.log("Wrote missing admin document for logged-in default admin.");
       }
-    } catch (e) {
-      console.error("Failed to seed admin credentials:", e);
+    } catch (err: any) {
+      // If login failed because the user does not exist in Auth (user-not-found/invalid-credential/wrong-password)
+      if (
+        err.code === "auth/user-not-found" || 
+        err.code === "auth/wrong-password" || 
+        err.code === "auth/invalid-credential"
+      ) {
+        console.log("Default admin user not found in Auth. Registering new admin account...");
+        try {
+          await this.registerAdmin(email, password, "Head of SAP Training");
+          console.log("Successfully registered default admin: admin@sapinstitute.com / AdminPassword123");
+        } catch (registerError) {
+          console.error("Failed to register default admin during seeding:", registerError);
+        }
+      } else {
+        console.error("Failed to seed default admin during login check:", err);
+      }
     }
   }
 };
