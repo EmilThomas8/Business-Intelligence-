@@ -141,6 +141,13 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
     setIsPaused(false);
   };
 
+  const handleAllProgramsClick = () => {
+    const coursesSection = document.getElementById("courses");
+    if (coursesSection) {
+      coursesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const handleCourseClick = (courseId: string) => {
     const cardElement = document.getElementById(`course-card-${courseId}`);
     if (cardElement) {
@@ -278,10 +285,13 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono uppercase tracking-[0.2em]">
+          <button
+            onClick={handleAllProgramsClick}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 hover:bg-cyan-500/20 active:scale-95 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-400 hover:text-cyan-300 text-xs font-mono uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer"
+          >
             <Sparkles className="w-3.5 h-3.5 animate-pulse" />
             <span>All Programs</span>
-          </div>
+          </button>
 
           <div className="space-y-4 overflow-hidden py-2">
             <motion.h1 
