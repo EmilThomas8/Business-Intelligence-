@@ -46,8 +46,8 @@ export default function Services({ onLearnMoreClick }: ServicesProps) {
           </p>
         </div>
 
-        {/* Services Grid (3 columns for 6 items) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Services Grid (Horizontal scroll on mobile, grid on desktop) */}
+        <div className="flex overflow-x-auto flex-row flex-nowrap gap-6 pb-8 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 md:pb-0">
           {services.map((service, index) => {
             const IconComponent = iconMap[service.iconName] || Terminal;
             const design = colors[index % colors.length];
@@ -55,7 +55,7 @@ export default function Services({ onLearnMoreClick }: ServicesProps) {
             return (
               <div
                 key={service.id}
-                className={`group flex flex-col justify-between p-8 rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/5 transition-all duration-500 hover:-translate-y-2.5 hover:bg-slate-900/70 hover:shadow-[0_20px_45px_rgba(0,0,0,0.4)] ${design.border} ${design.glow} relative overflow-hidden`}
+                className={`group flex-shrink-0 w-[82vw] max-w-[320px] md:w-full snap-align-start flex flex-col justify-between p-8 rounded-3xl bg-slate-900/40 backdrop-blur-md border border-white/5 transition-all duration-500 hover:-translate-y-2.5 hover:bg-slate-900/70 hover:shadow-[0_20px_45px_rgba(0,0,0,0.4)] ${design.border} ${design.glow} relative overflow-hidden`}
               >
                 {/* Visual Glow behind card */}
                 <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>

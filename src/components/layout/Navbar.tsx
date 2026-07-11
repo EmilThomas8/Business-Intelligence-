@@ -34,6 +34,7 @@ export default function Navbar({ onNavigate, activeSection = "hero", onEnrollCli
     { label: "Home", id: "hero" },
     { label: "Courses", id: "courses" },
     { label: "Team", id: "team" },
+    { label: "Insights", id: "blog" },
     { label: "Contact", id: "contact" },
   ];
 

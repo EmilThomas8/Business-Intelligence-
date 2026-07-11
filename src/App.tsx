@@ -15,12 +15,46 @@ import FloatingNav from "./components/layout/FloatingNav";
 import { seoCourses } from "./data/seoCoursesData";
 import CourseSEOPage from "./components/sections/CourseSEOPage";
 import Team from "./components/sections/Team";
+import Gallery from "./components/sections/Gallery";
+import StudentReviews from "./components/sections/StudentReviews";
+
+// Import Blog / Admin modules
+import BlogListing from "./components/sections/BlogListing";
+import BlogDetails from "./components/sections/BlogDetails";
+import AdminLogin from "./components/sections/AdminLogin";
+import AdminDashboard from "./components/sections/AdminDashboard";
+import { authService } from "./services/auth.service";
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'courses' | 'seo-course' | 'team'>("home");
+  const [view, setView] = useState<'home' | 'courses' | 'seo-course' | 'team' | 'blog' | 'blog-details' | 'admin-login' | 'admin-dashboard'>("home");
   const [activeCourseSlug, setActiveCourseSlug] = useState<string>("");
+  const [activeBlogSlug, setActiveBlogSlug] = useState<string>("");
+  const [adminUserUid, setAdminUserUid] = useState<string | null>(null);
   const [prefilledCourse, setPrefilledCourse] = useState("");
   const [prefilledComments, setPrefilledComments] = useState("");
+
+  // Firebase Auth State listener
+  useEffect(() => {
+    const unsubscribe = authService.subscribeToAuth(async (user) => {
+      if (user) {
+        const isAdmin = await authService.isAdmin(user.uid);
+        if (isAdmin) {
+          setAdminUserUid(user.uid);
+          if (window.location.pathname === "/admin" || window.location.pathname === "/admin/") {
+            setView("admin-dashboard");
+          }
+        } else {
+          setAdminUserUid(null);
+        }
+      } else {
+        setAdminUserUid(null);
+        if (view === "admin-dashboard") {
+          setView("admin-login");
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [view]);
 
   // URL Path Router sync
   useEffect(() => {
@@ -35,6 +69,22 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: "instant" as any });
           return;
         }
+      } else if (path.startsWith("/blog/")) {
+        const slug = path.replace("/blog/", "");
+        if (slug) {
+          setView("blog-details");
+          setActiveBlogSlug(slug);
+          window.scrollTo({ top: 0, behavior: "instant" as any });
+          return;
+        }
+      } else if (path === "/blog" || path === "/blog/") {
+        setView("blog");
+        window.scrollTo({ top: 0, behavior: "instant" as any });
+        return;
+      } else if (path === "/admin" || path === "/admin/") {
+        setView(adminUserUid ? "admin-dashboard" : "admin-login");
+        window.scrollTo({ top: 0, behavior: "instant" as any });
+        return;
       } else if (path === "/courses" || path === "/courses/") {
         setView("courses");
         window.scrollTo({ top: 0, behavior: "instant" as any });
@@ -52,7 +102,7 @@ export default function App() {
     return () => {
       window.removeEventListener("popstate", handleLocationChange);
     };
-  }, []);
+  }, [adminUserUid]);
 
   const navigateTo = (sectionId: string) => {
     if (sectionId === "courses") {
@@ -62,6 +112,14 @@ export default function App() {
     } else if (sectionId === "team") {
       window.history.pushState(null, "", "/team");
       setView("team");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (sectionId === "blog") {
+      window.history.pushState(null, "", "/blog");
+      setView("blog");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (sectionId === "admin") {
+      window.history.pushState(null, "", "/admin");
+      setView(adminUserUid ? "admin-dashboard" : "admin-login");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       const isSwitchingView = view !== "home";
@@ -84,6 +142,17 @@ export default function App() {
     setView("seo-course");
     setActiveCourseSlug(slug);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const navigateToBlogSlug = (slug: string) => {
+    window.history.pushState(null, "", `/blog/${slug}`);
+    setView("blog-details");
+    setActiveBlogSlug(slug);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const navigateToAdmin = () => {
+    navigateTo("admin");
   };
 
   const handleBackToAllCourses = () => {
@@ -117,6 +186,8 @@ export default function App() {
 
   const currentSeoCourse = seoCourses.find((c) => c.slug === activeCourseSlug);
 
+  const isNoLayout = view === "admin-login" || view === "admin-dashboard";
+
   return (
     <div id="app-root-wrapper" className="w-full min-h-screen bg-[#0F172A] text-slate-100 flex flex-col relative antialiased selection:bg-cyan-500 selection:text-slate-900">
       
@@ -124,11 +195,21 @@ export default function App() {
       <div className="absolute top-0 inset-x-0 h-[1000px] bg-gradient-to-b from-blue-600/10 via-transparent to-transparent pointer-events-none z-0"></div>
 
       {/* Header Sticky Navbar */}
-      <Navbar
-        onEnrollClick={() => handleEnrollClick()}
-        onNavigate={navigateTo}
-        activeSection={view === "courses" ? "courses" : view === "seo-course" ? "courses" : view === "team" ? "team" : "hero"}
-      />
+      {!isNoLayout && (
+        <Navbar
+          onEnrollClick={() => handleEnrollClick()}
+          onNavigate={navigateTo}
+          activeSection={
+            view === "courses" || view === "seo-course"
+              ? "courses"
+              : view === "team"
+              ? "team"
+              : view === "blog" || view === "blog-details"
+              ? "blog"
+              : "hero"
+          }
+        />
+      )}
 
       {/* Main Sections Wrapper */}
       <main className="flex-grow z-10 relative">
@@ -163,6 +244,9 @@ export default function App() {
 
               {/* Interactive Step-by-Step Pathway Journey */}
               <LearningJourney />
+
+              {/* Verified Student Testimonials Carousel & CTA */}
+              <StudentReviews />
 
               {/* Categorized Accordion FAQ */}
               <FAQSection />
@@ -208,8 +292,9 @@ export default function App() {
                 onBackToHome={() => navigateTo("hero")}
                 onNavigate={navigateTo}
               />
+              <Gallery />
             </motion.div>
-          ) : (
+          ) : view === "seo-course" ? (
             <motion.div
               key="seo-course"
               initial={{ opacity: 0, y: 10 }}
@@ -244,12 +329,74 @@ export default function App() {
                 </div>
               )}
             </motion.div>
+          ) : view === "blog" ? (
+            <motion.div
+              key="blog"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="pt-20"
+            >
+              <BlogListing
+                onNavigateToBlogSlug={navigateToBlogSlug}
+                onNavigateToAdmin={navigateToAdmin}
+              />
+            </motion.div>
+          ) : view === "blog-details" ? (
+            <motion.div
+              key="blog-details"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="pt-20"
+            >
+              <BlogDetails
+                slug={activeBlogSlug}
+                onBackToList={() => navigateTo("blog")}
+                onNavigateToBlogSlug={navigateToBlogSlug}
+              />
+            </motion.div>
+          ) : view === "admin-login" ? (
+            <motion.div
+              key="admin-login"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <AdminLogin
+                onLoginSuccess={(uid) => {
+                  setAdminUserUid(uid);
+                  setView("admin-dashboard");
+                }}
+                onBackToWebsite={() => navigateTo("blog")}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="admin-dashboard"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+            >
+              <AdminDashboard
+                onLogout={async () => {
+                  await authService.logout();
+                  setAdminUserUid(null);
+                  setView("admin-login");
+                }}
+                onBackToWebsite={() => navigateTo("blog")}
+              />
+            </motion.div>
           )}
         </AnimatePresence>
       </main>
 
       {/* Corporate Footprint Footer */}
-      <Footer onNavigate={navigateTo} />
+      {!isNoLayout && <Footer onNavigate={navigateTo} />}
     </div>
   );
 }
