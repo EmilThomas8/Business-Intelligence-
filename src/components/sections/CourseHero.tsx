@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion } from "motion/react";
 import { ArrowLeft, Sparkles, Calendar, ArrowUpRight } from "lucide-react";
+import Logo from "../common/Logo";
 
 const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -230,6 +231,18 @@ export default function CourseHero({ onBackToHome, onBookConsultation }: CourseH
       {/* Visual background glow lights */}
       <div className="absolute top-0 left-1/4 w-[50%] h-[100%] bg-blue-600/10 rounded-full blur-[160px] pointer-events-none"></div>
       <div className="absolute bottom-0 right-1/4 w-[40%] h-[80%] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+      {/* Large Brand Watermark Logo Background with customized cyan ambient side-glows */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
+        {/* Layered high-definition side cyan glow blobs to elevate visual depth */}
+        <div className="absolute w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] md:w-[650px] md:h-[650px] bg-cyan-500/[0.07] rounded-full blur-[130px] -translate-x-[30%] -translate-y-[15%]"></div>
+        <div className="absolute w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] md:w-[550px] md:h-[550px] bg-cyan-400/[0.05] rounded-full blur-[110px] translate-x-[35%] translate-y-[20%]"></div>
+        
+        {/* Watermark Logo itself */}
+        <div className="opacity-[0.04] sm:opacity-[0.06]">
+          <Logo className="w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] md:w-[700px] md:h-[700px] lg:w-[850px] lg:h-[850px] animate-pulse [animation-duration:12s]" showText={false} />
+        </div>
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 text-center">
         {/* Back to Home navigation button */}
