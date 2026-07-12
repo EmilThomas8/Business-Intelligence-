@@ -22,5 +22,11 @@ service cloud.firestore {
       allow read: if true;
       allow write: if isAdmin();
     }
+
+    // Courses collection rules
+    match /courses/{courseId} {
+      allow read: if resource == null || resource.data.status == 'Published' || isAdmin();
+      allow write: if isAdmin();
+    }
   }
 }

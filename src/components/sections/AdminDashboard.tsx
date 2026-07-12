@@ -1,3 +1,4 @@
+import logo from "../../assets/images/logo1.webp";
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -46,8 +47,11 @@ import {
   Save,
   Tag,
   BookCheck,
-  Check
+  Check,
+  GraduationCap,
+  Menu
 } from "lucide-react";
+import CourseManagement from "./CourseManagement";
 import { blogService, categoryService } from "../../services/blog.service";
 import { storageService } from "../../services/storage.service";
 import { authService } from "../../services/auth.service";
@@ -60,7 +64,7 @@ interface AdminDashboardProps {
   onBackToWebsite: () => void;
 }
 
-type AdminTab = "dashboard" | "blogs" | "editor" | "categories" | "media" | "settings";
+type AdminTab = "dashboard" | "blogs" | "editor" | "categories" | "media" | "settings" | "courses";
 
 interface MediaImage {
   url: string;
@@ -76,6 +80,7 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
   const [mediaImages, setMediaImages] = useState<MediaImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMedia, setLoadingMedia] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Admin Profile details from custom collection
   const [adminProfile, setAdminProfile] = useState<{ name: string; email: string; role: string } | null>(null);
@@ -734,18 +739,25 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
         <div className="space-y-8">
           
           {/* Logo Brand area */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center text-cyan-400 font-extrabold uppercase font-mono shadow-md shadow-cyan-500/5">
-              BI
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <img src={logo} alt="BIL Admin" className="w-10 h-10 rounded-xl object-contain border border-cyan-500/25" />
+              <div>
+                <h2 className="text-sm font-extrabold text-white leading-tight tracking-tight">BIL Admin</h2>
+                <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">SAP Control Tower</p>
+              </div>
             </div>
-            <div>
-              <h2 className="text-sm font-extrabold text-white leading-tight tracking-tight">BIL Admin</h2>
-              <p className="text-[10px] text-slate-500 font-mono tracking-widest uppercase">SAP Control Tower</p>
-            </div>
+            
+            <button 
+              className="md:hidden p-2 text-slate-400 hover:text-white"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
           </div>
 
           {/* Menu tab selection list */}
-          <nav className="space-y-1.5">
+          <nav className={`${isMobileMenuOpen ? 'block' : 'hidden'} md:block space-y-1.5`}>
             
             <button
               onClick={() => { setActiveTab("dashboard"); setEditingBlogId(null); }}
@@ -781,6 +793,18 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
             >
               <FolderHeart className="w-4 h-4" />
               <span>Categories</span>
+            </button>
+
+            <button
+              onClick={() => { setActiveTab("courses"); setEditingBlogId(null); }}
+              className={`w-full inline-flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                activeTab === "courses"
+                  ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <GraduationCap className="w-4 h-4" />
+              <span>Courses</span>
             </button>
 
             <button
@@ -1163,6 +1187,18 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
               )}
 
               {/* TAB 2: FULL BLOGS LIST PAGE */}
+              {/* TAB 2: COURSES MANAGEMENT */}
+              {activeTab === "courses" && (
+                <motion.div
+                  key="courses"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                >
+                  <CourseManagement />
+                </motion.div>
+              )}
+
               {activeTab === "blogs" && (
                 <motion.div
                   key="blogs"
