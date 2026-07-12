@@ -10,6 +10,7 @@ import {
   Tag, 
   SlidersHorizontal,
   ChevronRight,
+  ChevronDown,
   BookOpen
 } from "lucide-react";
 import { blogService, categoryService } from "../../services/blog.service";
@@ -30,6 +31,7 @@ export default function BlogListing({ onNavigateToBlogSlug, onNavigateToAdmin }:
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [sortBy, setSortBy] = useState<"newest" | "oldest">("newest");
+  const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
 
   // Initial Fetch & Seed
   useEffect(() => {
@@ -176,31 +178,94 @@ export default function BlogListing({ onNavigateToBlogSlug, onNavigateToAdmin }:
         {/* Filter Controls Bar */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-10 border-b border-white/5 mb-12">
           
-          {/* Categories Horizontal Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`px-4.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all border cursor-pointer ${
-                selectedCategory === "all"
-                  ? "bg-cyan-500 text-slate-950 border-cyan-400 font-bold"
-                  : "bg-slate-900/40 border-white/5 text-slate-300 hover:border-cyan-500/20"
-              }`}
-            >
-              All Categories
-            </button>
-            {categories.map((cat) => (
+          {/* Categories Selector */}
+          <div className="flex-1 w-full max-w-md">
+            {/* Desktop Horizontal Tabs */}
+            <div className="hidden md:flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
               <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
+                onClick={() => setSelectedCategory("all")}
                 className={`px-4.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all border cursor-pointer ${
-                  selectedCategory === cat.id
+                  selectedCategory === "all"
                     ? "bg-cyan-500 text-slate-950 border-cyan-400 font-bold"
                     : "bg-slate-900/40 border-white/5 text-slate-300 hover:border-cyan-500/20"
                 }`}
               >
-                {cat.name}
+                All Categories
               </button>
-            ))}
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4.5 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all border cursor-pointer ${
+                    selectedCategory === cat.id
+                      ? "bg-cyan-500 text-slate-950 border-cyan-400 font-bold"
+                      : "bg-slate-900/40 border-white/5 text-slate-300 hover:border-cyan-500/20"
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Dropdown Selector */}
+            <div className="relative w-full md:hidden">
+              <button
+                onClick={() => setIsCategoryDropdownOpen(!isCategoryDropdownOpen)}
+                className="w-full flex items-center justify-between px-4.5 py-3 rounded-xl bg-slate-900/60 border border-white/10 text-slate-200 text-sm font-semibold cursor-pointer focus:outline-none focus:border-cyan-500/50"
+              >
+                <span className="flex items-center gap-2">
+                  <Tag className="w-4 h-4 text-cyan-400" />
+                  <span>
+                    {selectedCategory === "all"
+                      ? "All Categories"
+                      : categories.find((c) => c.id === selectedCategory)?.name || "All Categories"}
+                  </span>
+                </span>
+                <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isCategoryDropdownOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {isCategoryDropdownOpen && (
+                <>
+                  {/* Backdrop click listener to close dropdown */}
+                  <div 
+                    className="fixed inset-0 z-20" 
+                    onClick={() => setIsCategoryDropdownOpen(false)} 
+                  />
+                  
+                  <div className="absolute left-0 right-0 mt-2 rounded-xl bg-slate-950/95 border border-white/10 shadow-2xl p-2 z-30 space-y-1 backdrop-blur-lg">
+                    <button
+                      onClick={() => {
+                        setSelectedCategory("all");
+                        setIsCategoryDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                        selectedCategory === "all"
+                          ? "bg-cyan-500/10 text-cyan-400 font-bold"
+                          : "text-slate-300 hover:bg-white/5"
+                      }`}
+                    >
+                      All Categories
+                    </button>
+                    {categories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => {
+                          setSelectedCategory(cat.id);
+                          setIsCategoryDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                          selectedCategory === cat.id
+                            ? "bg-cyan-500/10 text-cyan-400 font-bold"
+                            : "text-slate-300 hover:bg-white/5"
+                        }`}
+                      >
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Sorters and Controls */}
@@ -274,7 +339,7 @@ export default function BlogListing({ onNavigateToBlogSlug, onNavigateToAdmin }:
                 <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-transparent blur-lg pointer-events-none" />
 
                 {/* Left side Image */}
-                <div className="lg:col-span-7 h-[250px] sm:h-[350px] rounded-2xl overflow-hidden relative border border-white/5">
+                <div className="lg:col-span-5 h-[200px] sm:h-[280px] rounded-2xl overflow-hidden relative border border-white/5">
                   <img
                     src={featuredBlog.featuredImage || "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop"}
                     alt={featuredBlog.title}
@@ -289,7 +354,7 @@ export default function BlogListing({ onNavigateToBlogSlug, onNavigateToAdmin }:
                 </div>
 
                 {/* Right side Details */}
-                <div className="lg:col-span-5 flex flex-col justify-between py-2 space-y-6">
+                <div className="lg:col-span-7 flex flex-col justify-between py-2 space-y-6">
                   <div className="space-y-4">
                     
                     {/* Category Details & Reading Time */}

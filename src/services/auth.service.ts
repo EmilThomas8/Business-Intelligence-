@@ -31,11 +31,19 @@ export const authService = {
   // Verify if user is an admin by checking Firestore 'admins' collection
   async isAdmin(uid: string): Promise<boolean> {
     try {
+      // Direct email check for default admin to prevent registration/seeding race conditions
+      if (auth.currentUser?.email === "admin@sapinstitute.com") {
+        return true;
+      }
       const docRef = doc(db, ADMINS_COLLECTION, uid);
       const docSnap = await getDoc(docRef);
       return docSnap.exists();
     } catch (e) {
       console.error("Error verifying admin status:", e);
+      // Fallback for default admin
+      if (auth.currentUser?.email === "admin@sapinstitute.com") {
+        return true;
+      }
       return false;
     }
   },

@@ -36,6 +36,12 @@ export default function AdminLogin({ onLoginSuccess, onBackToWebsite }: AdminLog
     try {
       setLoading(true);
       setError(null);
+      
+      // If logging in with the default admin credentials, ensure they are seeded first
+      if (email.toLowerCase() === DEFAULT_EMAIL.toLowerCase()) {
+        await authService.seedAdminUserIfNeeded();
+      }
+
       const user = await authService.login(email, password);
       onLoginSuccess(user.uid);
     } catch (err: any) {

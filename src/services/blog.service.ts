@@ -23,17 +23,18 @@ export const blogService = {
   // Get all blogs (optionally filtered by status)
   async getAllBlogs(onlyPublished = true): Promise<BlogPost[]> {
     const blogsCol = collection(db, BLOGS_COLLECTION);
-    let q = query(blogsCol, orderBy("publishDate", "desc"));
-    
-    if (onlyPublished) {
-      q = query(blogsCol, where("status", "==", "published"), orderBy("publishDate", "desc"));
-    }
+    const q = query(blogsCol, orderBy("publishDate", "desc"));
     
     const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({
+    const posts = snapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     })) as BlogPost[];
+
+    if (onlyPublished) {
+      return posts.filter(post => post.status === "published");
+    }
+    return posts;
   },
 
   // Get single blog by ID

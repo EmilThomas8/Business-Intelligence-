@@ -19,11 +19,15 @@ export const auth = getAuth(app);
 
 // Use both experimentalForceLongPolling and useFetchStreams: false to guarantee
 // reliable connectivity inside the sandboxed iframe preview environment.
-export const db = appletConfig.firestoreDatabaseId
+const dbId = appletConfig.firestoreDatabaseId && appletConfig.firestoreDatabaseId !== "(default)"
+  ? appletConfig.firestoreDatabaseId
+  : undefined;
+
+export const db = dbId
   ? initializeFirestore(app, {
       experimentalForceLongPolling: true,
       useFetchStreams: false,
-    } as any, appletConfig.firestoreDatabaseId)
+    } as any, dbId)
   : initializeFirestore(app, {
       experimentalForceLongPolling: true,
       useFetchStreams: false,

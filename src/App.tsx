@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./components/sections/Hero";
@@ -33,14 +33,33 @@ export default function App() {
   const [prefilledCourse, setPrefilledCourse] = useState("");
   const [prefilledComments, setPrefilledComments] = useState("");
 
-  // Firebase Auth State listener
+  // Refs to avoid race conditions and stale state in asynchronous callback routines
+  const adminUserUidRef = useRef<string | null>(null);
+  const viewRef = useRef(view);
+
+  // Sync refs instantly with active state
+  useEffect(() => {
+    adminUserUidRef.current = adminUserUid;
+  }, [adminUserUid]);
+
+  useEffect(() => {
+    viewRef.current = view;
+  }, [view]);
+
+  // Firebase Auth State listener - executes once on mount
   useEffect(() => {
     const unsubscribe = authService.subscribeToAuth(async (user) => {
       if (user) {
-        const isAdmin = await authService.isAdmin(user.uid);
+        const isDefaultAdmin = user.email?.toLowerCase() === "admin@sapinstitute.com";
+        const isAdmin = isDefaultAdmin || await authService.isAdmin(user.uid);
         if (isAdmin) {
           setAdminUserUid(user.uid);
-          if (window.location.pathname === "/admin" || window.location.pathname === "/admin/") {
+          if (
+            window.location.pathname === "/admin" || 
+            window.location.pathname === "/admin/" ||
+            viewRef.current === "admin-login" ||
+            viewRef.current === "admin-dashboard"
+          ) {
             setView("admin-dashboard");
           }
         } else {
@@ -48,15 +67,15 @@ export default function App() {
         }
       } else {
         setAdminUserUid(null);
-        if (view === "admin-dashboard") {
+        if (viewRef.current === "admin-dashboard") {
           setView("admin-login");
         }
       }
     });
     return () => unsubscribe();
-  }, [view]);
+  }, []);
 
-  // URL Path Router sync
+  // URL Path Router sync - executes once on mount
   useEffect(() => {
     const handleLocationChange = () => {
       const path = window.location.pathname;
@@ -82,7 +101,7 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: "instant" as any });
         return;
       } else if (path === "/admin" || path === "/admin/") {
-        setView(adminUserUid ? "admin-dashboard" : "admin-login");
+        setView(adminUserUidRef.current ? "admin-dashboard" : "admin-login");
         window.scrollTo({ top: 0, behavior: "instant" as any });
         return;
       } else if (path === "/courses" || path === "/courses/") {
@@ -94,6 +113,11 @@ export default function App() {
         window.scrollTo({ top: 0, behavior: "instant" as any });
         return;
       }
+      
+      // Prevent resetting the state-driven admin views inside sandboxed environments where iframe path remains root '/'
+      if (viewRef.current === "admin-login" || viewRef.current === "admin-dashboard") {
+        return;
+      }
       setView("home");
     };
 
@@ -102,7 +126,7 @@ export default function App() {
     return () => {
       window.removeEventListener("popstate", handleLocationChange);
     };
-  }, [adminUserUid]);
+  }, []);
 
   const navigateTo = (sectionId: string) => {
     if (sectionId === "courses") {
