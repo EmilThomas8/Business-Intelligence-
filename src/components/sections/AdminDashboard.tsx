@@ -49,9 +49,11 @@ import {
   BookCheck,
   Check,
   GraduationCap,
-  Menu
+  Menu,
+  MessageSquare
 } from "lucide-react";
 import CourseManagement from "./CourseManagement";
+import ReviewManagement from "./ReviewManagement";
 import { blogService, categoryService } from "../../services/blog.service";
 import { storageService } from "../../services/storage.service";
 import { authService } from "../../services/auth.service";
@@ -64,7 +66,7 @@ interface AdminDashboardProps {
   onBackToWebsite: () => void;
 }
 
-type AdminTab = "dashboard" | "blogs" | "editor" | "categories" | "media" | "settings" | "courses";
+type AdminTab = "dashboard" | "blogs" | "editor" | "categories" | "media" | "settings" | "courses" | "reviews";
 
 interface MediaImage {
   url: string;
@@ -808,6 +810,18 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
             </button>
 
             <button
+              onClick={() => { setActiveTab("reviews"); setEditingBlogId(null); }}
+              className={`w-full inline-flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                activeTab === "reviews"
+                  ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/10"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Reviews</span>
+            </button>
+
+            <button
               onClick={() => { setActiveTab("media"); setEditingBlogId(null); }}
               className={`w-full inline-flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                 activeTab === "media"
@@ -1196,6 +1210,18 @@ export default function AdminDashboard({ onLogout, onBackToWebsite }: AdminDashb
                   exit={{ opacity: 0, y: -15 }}
                 >
                   <CourseManagement />
+                </motion.div>
+              )}
+
+              {/* TAB 3: REVIEWS MANAGEMENT */}
+              {activeTab === "reviews" && (
+                <motion.div
+                  key="reviews"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                >
+                  <ReviewManagement />
                 </motion.div>
               )}
 
