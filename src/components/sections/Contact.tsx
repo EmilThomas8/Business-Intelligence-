@@ -160,7 +160,7 @@ ${formData.name}`;
                 <div>
                   <span className="text-[10px] font-mono font-bold text-slate-400 block uppercase tracking-wider group-hover:text-cyan-400 transition-colors">Office Location</span>
                   <p className="text-white font-semibold text-sm group-hover:text-cyan-200 transition-colors">
-                    3rd Floor, Lotus Paradise Centre
+                   Business Intelligence Lab 3rd Floor Room # 309, Lotus Paradise Centre, Karangalpady.
                   </p>
                   <p className="text-slate-400 text-xs group-hover:text-slate-300 transition-colors">Karangalpady, Mangalore – 575002, Karnataka, India</p>
                 </div>
