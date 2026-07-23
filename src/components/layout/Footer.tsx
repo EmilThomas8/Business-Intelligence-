@@ -142,13 +142,6 @@ export default function Footer({ onNavigate }: FooterProps) {
               </p>
             </div>
 
-            {/* Verification and Trust badges */}
-            <div className="pt-4 flex flex-col gap-2.5">
-              <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-semibold uppercase tracking-wider">
-                <ShieldCheck className="h-4 w-4 text-cyan-400" />
-                <span>Authorized SAP Sandbox Partner</span>
-              </div>
-              
               {/* Social Media accounts fallback */}
               <div className="flex items-center gap-3 pt-2">
                 <a
